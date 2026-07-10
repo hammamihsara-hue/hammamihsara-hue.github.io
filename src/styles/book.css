@@ -160,11 +160,24 @@ a {
   z-index: 20;
   pointer-events: none;
   color: var(--ink);
-  transition: color 0.4s ease;
+  transition:
+    color 0.4s ease,
+    transform 0.45s var(--ease-page),
+    opacity 0.4s ease;
 }
 
 .running-head > * {
   pointer-events: auto;
+}
+
+/* the running head yields to the text while reading down */
+body.head-hidden .running-head {
+  transform: translateY(-110%);
+  opacity: 0;
+}
+
+body.head-hidden .running-head > * {
+  pointer-events: none;
 }
 
 .rh-name {
@@ -1495,6 +1508,10 @@ details.reading .poem {
   details.recipe::details-content,
   details.reading::details-content {
     transition: none;
+  }
+
+  .running-head {
+    transition: color 0.4s ease; /* hide/show still works, but instantly */
   }
 }
 

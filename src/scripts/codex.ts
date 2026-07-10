@@ -58,9 +58,14 @@ function initFolio(signal: AbortSignal): void {
     leaves = Array.from(edge.children) as HTMLElement[];
   }
 
+  // the running head steps aside while reading down, returns on any
+  // upward scroll, and always shows near the top of a page
+  let lastY = window.scrollY;
+
   const update = (): void => {
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = max > 4 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    const y = window.scrollY;
+    const progress = max > 4 ? Math.min(1, Math.max(0, y / max)) : 0;
     const current = start + progress * (end - start + 0.999);
     const shown = Math.min(end, Math.floor(current));
     folioOut.textContent = String(shown);
@@ -69,7 +74,22 @@ function initFolio(signal: AbortSignal): void {
       'chrome-inverse',
       !!hero && hero.getBoundingClientRect().bottom > 72
     );
+
+    const dy = y - lastY;
+    if (Math.abs(dy) > 4) {
+      document.body.classList.toggle('head-hidden', dy > 0 && y > 160);
+      lastY = y;
+    }
   };
+
+  // never leave keyboard focus inside an invisible header
+  document
+    .querySelector('.running-head')
+    ?.addEventListener(
+      'focusin',
+      () => document.body.classList.remove('head-hidden'),
+      { signal }
+    );
 
   // coalesce scroll/resize work into at most one update per frame
   let scheduled = false;
