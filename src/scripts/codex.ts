@@ -354,6 +354,9 @@ function turnPage(dir: 'forward' | 'back'): void {
   navigate(dest);
 }
 
+/* Keyboard only: touch swipe was removed — it fought iOS's native
+   edge-swipe-back gesture and the turn never felt smooth under a finger.
+   On phones, the turn-page links and the contents dialog navigate. */
 function initTurning(signal: AbortSignal): void {
   const dialog = document.querySelector<HTMLDialogElement>('[data-contents]');
 
@@ -368,35 +371,6 @@ function initTurning(signal: AbortSignal): void {
       else if (e.key === 'ArrowLeft') turnPage('back');
     },
     { signal }
-  );
-
-  // touch: a decisive horizontal fling turns the page; anything
-  // hesitant or diagonal is left to vertical scrolling
-  let t0 = 0;
-  let x0 = 0;
-  let y0 = 0;
-  window.addEventListener(
-    'pointerdown',
-    (e) => {
-      if (e.pointerType !== 'touch') return;
-      t0 = performance.now();
-      x0 = e.clientX;
-      y0 = e.clientY;
-    },
-    { passive: true, signal }
-  );
-  window.addEventListener(
-    'pointerup',
-    (e) => {
-      if (e.pointerType !== 'touch' || dialog?.open) return;
-      const dt = performance.now() - t0;
-      const dx = e.clientX - x0;
-      const dy = e.clientY - y0;
-      if (dt > 600 || Math.abs(dx) < 72 || Math.abs(dx) < Math.abs(dy) * 2.2)
-        return;
-      turnPage(dx < 0 ? 'forward' : 'back');
-    },
-    { passive: true, signal }
   );
 }
 

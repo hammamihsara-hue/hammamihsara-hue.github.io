@@ -50,9 +50,11 @@ src/
 
 ## reading controls
 
-- **← / → arrow keys** (desktop) and a **decisive sideways swipe** (touch)
-  turn to the previous/next page of the book, with a direction-matched
-  page-turn transition. Order: cover → contents entries; bounded at both ends.
+- **← / → arrow keys** (desktop) turn to the previous/next page of the
+  book, with a direction-matched page-turn transition. Order: cover →
+  contents entries; bounded at both ends. (Touch swipe was tried and
+  removed: it conflicts with iOS's native edge-swipe-back and never felt
+  smooth — on phones, navigate by the turn-page links or the contents.)
 - The **fore-edge** (hairline stack, right edge, desktop) is the book's
   unread pages — it thins as you read, hovering names it, clicking opens
   the contents. The **ribbon** does the same from the running head.

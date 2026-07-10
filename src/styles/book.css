@@ -386,6 +386,13 @@ body.chrome-inverse .fore-edge::after {
   color: var(--ink-soft);
 }
 
+/* no keyboard on touch devices — the hint would only confuse */
+@media (hover: none) {
+  .contents-dialog .turn-hint {
+    display: none;
+  }
+}
+
 /* ————— toc rows with leader lines (from her Webflow draft) ————— */
 .toc {
   list-style: none;
@@ -1427,7 +1434,9 @@ details.reading .poem {
   .folio-line {
     position: static;
     border-top: var(--hairline);
-    margin-top: 3rem;
+    /* no margin above: on dark-canvas pages the body would show
+       through the gap as a black bar over the footer */
+    margin-top: 0;
     padding-block: 1.4rem calc(1.6rem + env(safe-area-inset-bottom, 0px));
     background: var(--paper); /* body may be plate-dark on hero pages */
   }
