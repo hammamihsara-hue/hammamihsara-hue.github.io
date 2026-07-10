@@ -1,0 +1,187 @@
+---
+import { Image } from 'astro:assets';
+import Codex from '../layouts/Codex.astro';
+import Poem from '../components/Poem.astro';
+import grist from '../assets/grist.jpg';
+import hkBuilding from '../assets/hk-building.jpg';
+import hkTower from '../assets/hk-tower.jpg';
+
+/* poems live in src/poems/*.txt — the txt IS the layout (see README) */
+const poemsRaw = import.meta.glob<string>('/src/poems/*.txt', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+const poem = (name: string): string => poemsRaw[`/src/poems/${name}.txt`] ?? '';
+
+interface Item {
+  title: string;
+  file?: string;
+  mode?: 'spatial' | 'prose';
+  lang?: string;
+  note?: string;
+}
+
+interface Pub {
+  name: string;
+  year: string;
+  items: Item[];
+}
+
+const pubs: Pub[] = [
+  {
+    name: 'ANMLY Press',
+    year: '2024',
+    items: [
+      { title: 'iram of the pillars', file: 'iram-of-the-pillars', mode: 'spatial' },
+      { title: 'LITANY OF I MISS YOU’S', file: 'litany-of-i-miss-yous', mode: 'prose' },
+    ],
+  },
+  {
+    name: 'Grist — A Journal of the Literary Arts',
+    year: '2023',
+    items: [
+      { title: 'Te Deseo Que Sueñes Bien', file: 'te-deseo-que-suenes-bien', mode: 'prose' },
+    ],
+  },
+  {
+    name: 'DEAR Poetry Journal',
+    year: '2022',
+    items: [
+      { title: 'self portrait, 2022', file: 'self-portrait-2022', mode: 'spatial' },
+      { title: 'TEMPORADA DE TORMENTAS', note: 'text joining these pages soon' },
+      { title: 'INSHALLAH, INSHALLAH, INSHALLAH,', file: 'inshallah-inshallah-inshallah', mode: 'spatial' },
+    ],
+  },
+  {
+    name: 'Red Pocket Press — Year of the Tiger Zine',
+    year: '2022',
+    items: [{ title: 'Imperial Silk', file: 'imperial-silk', mode: 'prose' }],
+  },
+  {
+    name: 'Kutubna Cultural Center',
+    year: '2023–2024',
+    items: [
+      { title: 'Sea of Debt — an interview with Ahmed Yaqoub AlMaazmi', note: 'interview' },
+      { title: 'An interview with Dr. Shahd Alshammari', note: 'interview' },
+    ],
+  },
+  {
+    name: 'Isolated Journal',
+    year: '2020',
+    items: [{ title: 'Where the Desert Meets the Sea', note: 'text joining these pages soon' }],
+  },
+];
+---
+
+<Codex
+  title="published works"
+  description="Poems by Sara H. Hammami, first published with ANMLY, Grist, DEAR Poetry Journal, Red Pocket Press, and others — readable here in their manuscript setting."
+  folioStart={11}
+  folioEnd={13}
+  edgeLabel="published works"
+>
+  <header class="readings-head">
+    <h1 class="hero-title">Published Works</h1>
+    <span class="label">poetry · a reading room — please open a title to read</span>
+  </header>
+
+  <div class="reading-room">
+    <div class="book-leaves book-leaves--reading">
+    {
+      pubs.map((pub) => (
+        <section class="pub">
+          <div class="pub-head">
+            <h2 class="pub-name">{pub.name}</h2>
+            <span class="pub-year">{pub.year}</span>
+          </div>
+          {pub.items.map((item) =>
+            item.file ? (
+              <details class="reading">
+                <summary>
+                  <span>{item.title}</span>
+                  <span class="open-word">read</span>
+                </summary>
+                <Poem text={poem(item.file)} mode={item.mode ?? 'spatial'} lang={item.lang} />
+                <p class="first-appeared">
+                  first appeared in {pub.name}, {pub.year}.
+                </p>
+              </details>
+            ) : (
+              <p class="pub-item-flat">
+                <span>{item.title}</span>
+                <span class="open-word">{item.note}</span>
+              </p>
+            )
+          )}
+          {pub.name.startsWith('Grist') && (
+            <figure class="tipped-in">
+              <Image
+                src={grist}
+                alt="A printed copy of Grist journal, its illustrated cover resting on a stack of other journals."
+                widths={[420, 820]}
+                sizes="17rem"
+                quality={80}
+              />
+              <figcaption>Grist, in print</figcaption>
+            </figure>
+          )}
+        </section>
+      ))
+    }
+
+    <section class="ongoing-book">
+      <div class="pub-head">
+        <h2 class="pub-name">How Ma-Ma Finds Me</h2>
+        <span class="pub-year">ongoing artist book</span>
+      </div>
+      <div class="statement">
+        <p>
+          in early 2024, several years after the passing of my grandmother
+          from my mother’s side, i had a dream which became the poem “HOW
+          MA-MA FINDS ME, 5 YEARS LATER / IN HONG KONG, / IMAGINED”. my
+          grandparents moved from the area of Guangzho to Hong Kong to
+          Santiago de los Caballeros. growing up, i spoke with ma-ma in
+          spanish and her with me in a combination of enping and spanish. it
+          was a daydream that we would often create together — on visiting
+          Hong Kong together, with her directing me through her memories of
+          the city.
+        </p>
+        <p>
+          during my trip to Hong Kong in 2025, i examined my routes
+          throughout the city with this poem that came to me over a year
+          prior, wondering if in fact, i had received these words &amp;
+          notices from her to hear her voice in my physical meandering.
+          these photographs document these parallels which seek to meet the
+          poem in this dream-scape memory / alternate reality.
+        </p>
+      </div>
+      <div class="duet">
+        <figure class="plate">
+          <div class="plate-frame">
+            <Image
+              src={hkBuilding}
+              alt="A pale Hong Kong apartment tower glimpsed through dense dark trees."
+              widths={[560, 1100]}
+              sizes="(max-width: 54rem) 100vw, 26rem"
+              quality={80}
+            />
+          </div>
+        </figure>
+        <figure class="plate">
+          <div class="plate-frame">
+            <Image
+              src={hkTower}
+              alt="A high-rise against a stormy grey sky, framed by a palm and a lemon tree."
+              widths={[560, 1100]}
+              sizes="(max-width: 54rem) 100vw, 26rem"
+              quality={80}
+            />
+          </div>
+        </figure>
+      </div>
+      <Poem text={poem('how-ma-ma-finds-me')} mode="spatial" />
+    </section>
+    </div>
+  </div>
+</Codex>

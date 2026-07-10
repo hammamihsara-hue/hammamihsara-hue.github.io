@@ -1,0 +1,29 @@
+/* ————————————————————————————————————————————————
+   tokens — every value traced to Sara's own materials:
+   paper & ink from the 2026 portfolio, thread from the
+   wax-sealed ribbon in An Early Summer Heaven, rice blue
+   from the rice paper of Entangled Anemones.
+   ———————————————————————————————————————————————— */
+:root {
+  --paper: #f2efe6;
+  --paper-deep: #eae4d6;
+  --ink: #29241b;
+  --ink-soft: #6f675a;
+  --plate: #12100a;
+  --thread: #7c3130;
+  --rice: #aec3cc;
+
+  --font-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-book: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --font-label: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-poem: 'Times New Roman', Times, 'Liberation Serif', serif;
+  --font-arabic: 'Amiri', 'Times New Roman', serif;
+
+  --measure: 37rem;
+  --head-h: 3.5rem;
+  --page-pad: clamp(1.25rem, 4.5vw, 4rem);
+  --hairline-color: color-mix(in srgb, var(--ink) 24%, transparent);
+  --hairline: 1px solid var(--hairline-color);
+
+  --ease-page: cubic-bezier(0.33, 0.01, 0.2, 1);
+}

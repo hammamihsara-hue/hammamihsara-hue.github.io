@@ -1,0 +1,33 @@
+---
+/**
+ * A photographic plate: optimized image + RISO grain, optionally wearing
+ * the light-chasing overlay (a pool of sun that follows the cursor).
+ */
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  wide?: boolean;
+  light?: boolean;
+  eager?: boolean;
+}
+
+const { src, alt, caption, wide = false, light = false, eager = false } = Astro.props;
+---
+
+<figure class:list={['plate', { 'plate--wide': wide }]}>
+  <div class="plate-frame" data-light={light ? '' : undefined}>
+    <Image
+      src={src}
+      alt={alt}
+      widths={[720, 1100, 1600, 2200]}
+      sizes={wide ? '(max-width: 76rem) 100vw, 74rem' : '(max-width: 54rem) 100vw, 52rem'}
+      loading={eager ? 'eager' : 'lazy'}
+      quality={84}
+    />
+    {light && <div class="plate-light" aria-hidden="true"></div>}
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

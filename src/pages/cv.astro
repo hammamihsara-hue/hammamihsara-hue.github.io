@@ -1,0 +1,150 @@
+---
+import Codex from '../layouts/Codex.astro';
+
+interface Entry {
+  what: string;
+  who?: string;
+  when: string;
+}
+
+interface Section {
+  label: string;
+  entries: Entry[];
+}
+
+const sections: Section[] = [
+  {
+    label: 'experience',
+    entries: [
+      { what: 'Library & Research Curator', who: 'Art Jameel, Jeddah', when: 'january – may 2026' },
+      { what: 'Library & Research Coordinator', who: 'Art Jameel, Jeddah', when: 'december 2023 – december 2025' },
+      { what: 'Features & Reviews Co-Editor', who: 'ANMLY Press', when: 'october 2025 – present' },
+      { what: 'Program Associate (volunteer)', who: 'Kutubna Cultural Center, Dubai', when: '2023 – 2025' },
+      { what: 'Editor’s Assistant', who: 'The Brooklyn Rail, New York', when: '2022' },
+      { what: 'Writing Tutor', who: 'Pratt Institute Writing & Tutorial Center, New York', when: '2021 – 2023' },
+      { what: 'Intern', who: 'Hopscotch Reading Room, Berlin', when: '2022' },
+      { what: 'Writing Consultant', who: 'USF Academic Success Center, Tampa', when: '2019 – 2020' },
+    ],
+  },
+  {
+    label: 'education',
+    entries: [
+      { what: 'MA Museum Studies', who: 'SOAS University of London — curation, libraries, archives & alternative research methodologies', when: '2025' },
+      { what: 'BFA Creative Writing, minor in The Book, honors', who: 'Pratt Institute, New York — poetry, politics of translation & artist books', when: '2023' },
+    ],
+  },
+  {
+    label: 'residencies & fellowships',
+    entries: [
+      { what: 'MASAHA Cycle 11, artist resident', who: 'Misk Art Institute, Riyadh', when: '2026' },
+      { what: 'Rewilding the Kitchen, artist resident', who: 'Diriyah Biennale, Jeddah', when: '2025' },
+      { what: 'Visual Arts Commission Mentorship Program, curator mentee', who: 'Kingdom of Saudi Arabia', when: '2024' },
+      { what: 'Image Text Workshop, artist resident', who: 'Cornell University, New York', when: '2023' },
+      { what: 'Identity and the Art of Introduction, selected artist', who: 'hosted by Nick Cave & Bob Faust, Florida', when: '2019' },
+    ],
+  },
+  {
+    label: 'exhibitions',
+    entries: [
+      { what: 'Sindbad: I Can See Land — Chasing the Sun / Enamorado Con El Sol', who: 'Beit Sharbatly, Jeddah', when: '2023 – 2024' },
+      { what: 'Speculating the Environment — Entangled Anemones', who: 'Pratt Institute, Brooklyn', when: '2023' },
+      { what: 'Art of the Book — Early Summer Heaven', who: 'Pratt Institute, Brooklyn', when: '2023' },
+    ],
+  },
+  {
+    label: 'publications',
+    entries: [
+      { what: 'iram of the pillars · LITANY OF I MISS YOU’S', who: 'ANMLY Press', when: '2024' },
+      { what: 'Sea of Debt — an interview with Ahmed Yaqoub AlMaazmi', who: 'Kutubna Cultural Center', when: '2024' },
+      { what: 'An interview with Dr. Shahd Alshammari', who: 'Kutubna Cultural Center', when: '2023' },
+      { what: 'Te Deseo Que Sueñes Bien', who: 'Grist — A Journal of the Literary Arts', when: '2023' },
+      { what: 'self portrait, 2022 · TEMPORADA DE TORMENTAS · INSHALLAH, INSHALLAH, INSHALLAH', who: 'DEAR Poetry Journal', when: '2022' },
+      { what: 'Imperial Silk', who: 'Red Pocket Press — Year of the Tiger Zine', when: '2022' },
+      { what: 'Where the Desert Meets the Sea', who: 'Isolated Journal', when: '2020' },
+    ],
+  },
+  {
+    label: 'readings',
+    entries: [
+      { what: 'TONGUES — multilingual reading', who: 'ANMLY Press', when: '2025' },
+      { what: 'Thesis reading & defense', who: 'Pratt Institute', when: '2023' },
+      { what: 'Foundation Expanded — Myrtle Ave Public Projects', who: 'Brooklyn', when: '2023' },
+      { what: 'The Crucible’s Earthseed', who: 'NYCJW', when: '2022' },
+      { what: 'Indie poet finalist', who: 'Feminine Empowerment Movement Slam', when: '2019' },
+    ],
+  },
+  {
+    label: 'curatorial & research, selected',
+    entries: [
+      { what: '‘The Library as the City’ with Nadine Ghandour, curator', who: 'Hayy Jameel, Jeddah', when: '2025 – 2026' },
+      { what: 'Salt-Kissed: Of Vessels That Have Sailed the Red Sea, curator', who: 'Hayy Jameel, Jeddah', when: '2024' },
+      { what: 'Formative Friends Group: Glimpses from the Archive, curator', who: 'Hayy Jameel, Jeddah', when: '2024' },
+      { what: 'Echoes of the Shells: Sounds of the Red Sea, with FLEE Project', who: 'Hayy Jameel, Jeddah', when: '2024' },
+      { what: 'Tending the Poetics of the Archive, facilitator', who: 'Diriyah Biennale, Riyadh', when: '2026' },
+      { what: 'Cycles of Renewals & Timekeeping, facilitator', who: 'Hayy Jameel, Jeddah', when: '2026' },
+    ],
+  },
+  {
+    label: 'languages',
+    entries: [
+      { what: 'English', who: 'native', when: '' },
+      { what: 'Spanish', who: 'fluent', when: '' },
+      { what: 'Arabic', who: 'conversational', when: '' },
+      { what: 'Cantonese & German', who: 'studying', when: '' },
+    ],
+  },
+];
+---
+
+<Codex
+  title="cv"
+  description="Curriculum vitae of Sara H. Hammami — librarian, artist, poet & translator."
+  folioStart={14}
+  folioEnd={14}
+  edgeLabel="back matter"
+>
+  <div class="cv-page">
+    <h1 class="cv-title">Curriculum Vitae</h1>
+    <p class="cv-contact">
+      <a class="thread-link" href="mailto:hammamihsara@gmail.com">hammamihsara@gmail.com</a>
+    </p>
+    <p class="cv-download">
+      <a class="thread-link thread-link--sewn" href="/Hammami_Sara_CV.pdf" download>
+        download the full cv (pdf)
+      </a>
+    </p>
+
+    <div class="cv-grid">
+      {
+        sections.map((section) => (
+          <section class="cv-section">
+            <span class="label">{section.label}</span>
+            {section.entries.map((entry) => (
+              <p class="cv-entry">
+                <span class="what">{entry.what}</span>
+                {entry.who && (
+                  <>
+                    <br />
+                    <span class="who">{entry.who}</span>
+                  </>
+                )}
+                {entry.when && (
+                  <>
+                    <br />
+                    <span class="when">{entry.when}</span>
+                  </>
+                )}
+              </p>
+            ))}
+          </section>
+        ))
+      }
+    </div>
+
+    <p class="colophon">
+      this site is set in Cormorant Garamond, EB Garamond, Archivo &amp;
+      Amiri; the poems keep their manuscript setting in Times. built as a
+      book, 2026. photographs &amp; texts © Sara H. Hammami.
+    </p>
+  </div>
+</Codex>

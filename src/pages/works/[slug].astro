@@ -1,0 +1,205 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import Codex from '../../layouts/Codex.astro';
+import Plate from '../../components/Plate.astro';
+import Poem from '../../components/Poem.astro';
+import { TOC } from '../../lib/toc';
+
+export async function getStaticPaths() {
+  const works = await getCollection('works');
+  return works.map((entry) => ({
+    params: { slug: entry.id.replace(/\/index$/, '') },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'works'>;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const slug = entry.id.replace(/\/index$/, '');
+
+/* poems: the txt file is the layout — see README */
+const poemsRaw = import.meta.glob<string>('/src/content/works/**/poems/*.txt', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+const poemText = (file: string): string =>
+  poemsRaw[`/src/content/works/${slug}/poems/${file}`] ?? '';
+
+type Leaf = (typeof d.leaves)[number];
+type PoemLeaf = Extract<Leaf, { kind: 'poem' }>;
+type PlateLeaf = Extract<Leaf, { kind: 'plate' }>;
+type Block =
+  | { kind: 'single'; leaf: Leaf }
+  | { kind: 'recipes'; recipes: PoemLeaf[] }
+  | { kind: 'duet'; plates: PlateLeaf[] };
+
+/* consecutive recipe poems shelve together like the box's little books;
+   consecutive duet plates sit side by side like a printed spread */
+const blocks: Block[] = [];
+for (const leaf of d.leaves) {
+  const last = blocks[blocks.length - 1];
+  if (leaf.kind === 'poem' && leaf.mode === 'recipe') {
+    if (last && last.kind === 'recipes') last.recipes.push(leaf);
+    else blocks.push({ kind: 'recipes', recipes: [leaf] });
+  } else if (leaf.kind === 'plate' && leaf.duet) {
+    if (last && last.kind === 'duet') last.plates.push(leaf);
+    else blocks.push({ kind: 'duet', plates: [leaf] });
+  } else {
+    blocks.push({ kind: 'single', leaf });
+  }
+}
+
+const here = `/works/${slug}`;
+const idx = TOC.findIndex((t) => t.href === here);
+const prev = idx > 0 ? TOC[idx - 1] : undefined;
+const next = idx >= 0 && idx < TOC.length - 1 ? TOC[idx + 1] : undefined;
+
+const pageTitle = d.eyebrow ? `${d.eyebrow} — ${d.title}` : d.title;
+---
+
+<Codex
+  title={pageTitle.toLowerCase()}
+  description={`${d.title} (${d.year}) — ${d.media}. a work by Sara H. Hammami.`}
+  folioStart={d.folioStart}
+  folioEnd={d.folioEnd}
+  edgeLabel="selected works"
+  canvas={!d.uncut && d.tone === 'dark' ? 'plate' : 'paper'}
+>
+  {
+    d.uncut ? (
+      <section class="chapter-hero chapter-hero--uncut">
+        <div class="hero-text">
+          <p class="hero-eyebrow label">{d.year} · {d.media}</p>
+          <h1 class="hero-title">{d.title}</h1>
+          <p class="uncut-line">these pages are still uncut.</p>
+        </div>
+        <div class="deckle" aria-hidden="true" />
+      </section>
+    ) : (
+      <section
+        class:list={['chapter-hero', { 'chapter-hero--bright': d.tone === 'bright' }]}
+        data-hero-dark={d.tone === 'dark' ? '' : undefined}
+      >
+        <div class="plate-frame" data-light={d.coverLight ? '' : undefined}>
+          {d.cover && (
+            <Image
+              src={d.cover}
+              alt={d.coverAlt ?? ''}
+              widths={[820, 1400, 2200]}
+              sizes="100vw"
+              loading="eager"
+              quality={80}
+            />
+          )}
+          {d.coverLight && <div class="plate-light" aria-hidden="true" />}
+        </div>
+        <div class="hero-text">
+          {d.eyebrow && <p class="hero-eyebrow label">{d.eyebrow}</p>}
+          <h1 class="hero-title">{d.title}</h1>
+          <p class="hero-meta label">{d.year} · {d.media}</p>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="chapter-body" data-accent={d.accent}>
+    <div class="book-leaves">
+      {
+        d.epigraph && (
+          <blockquote class="epigraph">
+            {d.epigraph}
+            {d.epigraphCite && <cite>— {d.epigraphCite}</cite>}
+          </blockquote>
+        )
+      }
+
+      <div class="statement">
+        <Content />
+      </div>
+
+      {d.exhibited && <p class="exhibited-note">{d.exhibited}</p>}
+
+      {
+        blocks.map((block) =>
+          block.kind === 'recipes' ? (
+            <div class="recipes">
+              {block.recipes.map((recipe) => (
+                <details class="recipe">
+                  <summary>
+                    <span>
+                      {(recipe.titleParts ?? [{ text: recipe.file }]).map((part) => (
+                        <span style={part.tone ? `color:${part.tone}` : undefined}>
+                          {part.text}
+                        </span>
+                      ))}
+                    </span>
+                    <span class="open-word">please open</span>
+                  </summary>
+                  <Poem text={poemText(recipe.file)} mode="recipe" />
+                </details>
+              ))}
+            </div>
+          ) : block.kind === 'duet' ? (
+            <div class="duet duet--plates">
+              {block.plates.map((plate) => (
+                <Plate src={plate.src} alt={plate.alt} caption={plate.caption} light={plate.light} />
+              ))}
+            </div>
+          ) : block.leaf.kind === 'plate' ? (
+            <Plate
+              src={block.leaf.src}
+              alt={block.leaf.alt}
+              caption={block.leaf.caption}
+              wide={block.leaf.wide}
+              light={block.leaf.light}
+            />
+          ) : block.leaf.kind === 'poem' ? (
+            <Poem
+              text={poemText(block.leaf.file)}
+              mode={block.leaf.mode === 'recipe' ? 'prose' : block.leaf.mode}
+              align={block.leaf.align}
+              label={block.leaf.label}
+            />
+          ) : (
+            <p class="chapter-note">{block.leaf.text}</p>
+          )
+        )
+      }
+
+      <nav class="turn-page" aria-label="turn the page">
+        <div>
+          {
+            prev ? (
+              <>
+                <span class="label">previous</span>
+                <a class="thread-link" href={prev.href}>{prev.label}</a>
+              </>
+            ) : (
+              <>
+                <span class="label">return</span>
+                <a class="thread-link" href="/">cover — contents</a>
+              </>
+            )
+          }
+        </div>
+        <div style="text-align: right;">
+          {
+            next && (
+              <>
+                <span class="label">next page</span>
+                <a class="thread-link" href={next.href}>{next.label}</a>
+              </>
+            )
+          }
+        </div>
+      </nav>
+    </div>
+  </section>
+</Codex>

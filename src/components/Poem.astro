@@ -1,0 +1,29 @@
+---
+/**
+ * Renders a poem from a raw .txt string, preserving its whitespace exactly.
+ * The txt file is the single source of truth for the poem's spatial form —
+ * to fix a poem's layout, edit the txt, never this component.
+ */
+interface Props {
+  text: string;
+  mode?: 'spatial' | 'prose' | 'overprint' | 'recipe';
+  align?: 'left' | 'right';
+  label?: string;
+  lang?: string;
+}
+
+const { text, mode = 'spatial', align = 'left', label, lang } = Astro.props;
+
+const lines = text.replace(/\s+$/, '').split('\n');
+const modeClass = mode === 'recipe' ? 'poem--prose' : `poem--${mode}`;
+---
+
+<div
+  class:list={['poem', modeClass, { 'poem--right': align === 'right' }]}
+  lang={lang}
+>
+  {label && <p class="poem-label label">{label}</p>}
+  <pre>{lines.map((line, i) => (
+    <span class="pl" style={`--i:${Math.min(i, 26)}`}>{line.length ? line : ' '}</span>
+  ))}</pre>
+</div>

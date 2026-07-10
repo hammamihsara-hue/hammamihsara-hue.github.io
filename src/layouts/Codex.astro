@@ -1,0 +1,130 @@
+---
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/600.css';
+import '@fontsource/cormorant-garamond/500-italic.css';
+import '@fontsource/eb-garamond/400.css';
+import '@fontsource/eb-garamond/500.css';
+import '@fontsource/eb-garamond/400-italic.css';
+import '@fontsource/archivo/400.css';
+import '@fontsource/archivo/400-italic.css';
+import '@fontsource/amiri/400.css';
+import '../styles/tokens.css';
+import '../styles/book.css';
+import { ClientRouter } from 'astro:transitions';
+import { TOC, TOTAL_FOLIOS } from '../lib/toc';
+
+interface Props {
+  title?: string;
+  description?: string;
+  folioStart: number;
+  folioEnd: number;
+  edgeLabel?: string;
+  /** root canvas behind safe areas & overscroll: match the page's opening */
+  canvas?: 'paper' | 'plate';
+}
+
+const {
+  title,
+  description = 'sara h. hammami — librarian, artist, poet & translator. poems, artist books, photography.',
+  folioStart,
+  folioEnd,
+  edgeLabel,
+  canvas = 'paper',
+} = Astro.props;
+
+const fullTitle = title ? `${title} — sara h. hammami` : 'sara h. hammami';
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+
+/** The dialog's contents include the cover itself. */
+const dialogToc = [
+  { href: '/', label: 'cover — about & contents', folio: 1 },
+  ...TOC,
+];
+---
+
+<!doctype html>
+<html lang="en" data-canvas={canvas}>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="theme-color"
+      content={canvas === 'plate' ? '#12100a' : '#f2efe6'}
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip" href="#main">skip to contents</a>
+
+    <header class="running-head">
+      <a class="rh-name" href="/">sara h. hammami</a>
+      <span class="rh-arabic" lang="ar" dir="rtl">سارة ه. حمامي</span>
+      <button
+        class="ribbon"
+        type="button"
+        aria-haspopup="dialog"
+        aria-label="open the table of contents"
+        data-open-contents
+      >
+      </button>
+    </header>
+
+    <main id="main" data-folio-start={folioStart} data-folio-end={folioEnd}>
+      <slot />
+    </main>
+
+    <footer class="folio-line">
+      <span class="folio">
+        <span class="folio-circle" data-folio-now>{folioStart}</span>
+        <span aria-hidden="true">—</span>
+        <span>{TOTAL_FOLIOS}</span>
+      </span>
+      <span>2026</span>
+    </footer>
+
+    <button
+      class="fore-edge"
+      type="button"
+      aria-haspopup="dialog"
+      aria-label="the unread pages — open the table of contents"
+      data-open-contents
+      data-total={TOTAL_FOLIOS}
+    >
+    </button>
+
+    {edgeLabel && <span class="edge-label" aria-hidden="true">{edgeLabel}</span>}
+
+    <dialog class="contents-dialog" data-contents>
+      <button class="contents-close" type="button" data-close-contents>close</button>
+      <p class="ornament-head">Contents</p>
+      <ol class="toc">
+        {
+          dialogToc.map((entry) => (
+            <li>
+              <a href={entry.href} aria-current={path === entry.href ? 'page' : undefined}>
+                <span class="toc-row">
+                  <span class="toc-label">{entry.label}</span>
+                  {'note' in entry && entry.note && <span class="toc-note">{entry.note}</span>}
+                  <span class="leader" />
+                  <span class="toc-folio">{entry.folio}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="turn-hint">turn the pages with ← → , or a sideways swipe</p>
+    </dialog>
+
+    <script>
+      import '../scripts/codex';
+    </script>
+  </body>
+</html>

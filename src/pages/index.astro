@@ -1,0 +1,98 @@
+---
+import { Image } from 'astro:assets';
+import Codex from '../layouts/Codex.astro';
+import { TOC } from '../lib/toc';
+import cover from '../content/works/chasing-the-sun/plate-tree.jpg';
+import coral from '../assets/coral.jpg';
+import portrait from '../assets/portrait.jpg';
+---
+
+<Codex folioStart={1} folioEnd={1} canvas="plate">
+  <section class="cover" data-hero-dark>
+    <div class="plate-frame" data-light>
+      <Image
+        src={cover}
+        alt=""
+        widths={[820, 1400, 2200]}
+        sizes="100vw"
+        loading="eager"
+        quality={80}
+      />
+      <div class="plate-light" aria-hidden="true"></div>
+    </div>
+    <div class="cover-titles">
+      <p class="cover-arabic" lang="ar" dir="rtl">سارة ه. حمامي</p>
+      <h1 class="cover-name">Sara H. Hammami</h1>
+      <p class="cover-role label">librarian · artist · poet · translator</p>
+    </div>
+    <button class="cover-open" type="button" data-scroll-to="#spread">
+      <span class="thread-link thread-link--sewn">please open</span>
+    </button>
+  </section>
+
+  <section class="spread" id="spread" aria-label="about and contents">
+    <div class="page page-verso">
+      <h2 class="ornament-head">About</h2>
+      <div class="bio">
+        <p class="dropcap">
+          Sara H. Hammami (b. 1998, United States) is a multidisciplinary
+          artist interested in poetics as a mode to maneuver translation,
+          archives, research, and storytelling.
+        </p>
+        <p>
+          She has presented her work in Saudi Arabia and the United States,
+          such as <em>Sindbad: I Can See Land</em>, Bait Al Sharbatly, Saudi
+          Arabia (2024), <em>Speculating the Environment</em>, Pratt
+          Institute, United States (2023), and <em>Art of the Book</em>,
+          Pratt Library, United States (2023).
+        </p>
+        <p>
+          Hammami has poems published with <em>ANMLY</em>, <em>Grist</em>,
+          and <em>DEAR Poetry Journal</em>, among others. She performed and
+          read at <em>TONGUES: ANMLY Multilingual Reading</em> (2025), <em>Earthseed</em>,
+          NYCJW (2022), and was a finalist at FEMS Tournament (2019).
+        </p>
+        <p>
+          She has participated in residencies such as Masaha Misk Art
+          Institute, Saudi Arabia (2026), Diriyah Contemporary Biennale,
+          Saudi Arabia (2025) and Image Text at Cornell University, United
+          States (2023).
+        </p>
+        <figure class="tipped-in">
+          <Image src={portrait} alt="Sara, photographed from behind in black and white, dark curls against a soft riverside light." widths={[420, 820]} sizes="17rem" quality={80} />
+        </figure>
+      </div>
+    </div>
+
+    <div class="page page-recto">
+      <h2 class="ornament-head">Contents</h2>
+      <div class="contents-page">
+        <ol class="toc">
+          {
+            TOC.map((entry) => (
+              <li>
+                <a href={entry.href}>
+                  <span class="toc-row">
+                    <span class="toc-label">{entry.label}</span>
+                    {entry.note && <span class="toc-note">{entry.note}</span>}
+                    <span class="leader" />
+                    <span class="toc-folio">{entry.folio}</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="inquire">
+          <a class="thread-link thread-link--sewn" href="mailto:hammamihsara@gmail.com">
+            inquire — hammamihsara@gmail.com
+          </a>
+        </p>
+        <figure class="tipped-in">
+          <Image src={coral} alt="A green coral head on pale sand, seen through shallow prismatic water." widths={[420, 820]} sizes="17rem" quality={80} />
+          <figcaption>the red sea, translucent</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+</Codex>
