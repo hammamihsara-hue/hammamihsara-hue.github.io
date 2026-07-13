@@ -62,11 +62,12 @@ const prev = idx > 0 ? TOC[idx - 1] : undefined;
 const next = idx >= 0 && idx < TOC.length - 1 ? TOC[idx + 1] : undefined;
 
 const pageTitle = d.eyebrow ? `${d.eyebrow} — ${d.title}` : d.title;
+const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : ''}. a work by Sara H. Hammami.`;
 ---
 
 <Codex
   title={pageTitle.toLowerCase()}
-  description={`${d.title} (${d.year}) — ${d.media}. a work by Sara H. Hammami.`}
+  description={workDescription}
   folioStart={d.folioStart}
   folioEnd={d.folioEnd}
   edgeLabel="selected works"
@@ -76,7 +77,9 @@ const pageTitle = d.eyebrow ? `${d.eyebrow} — ${d.title}` : d.title;
     d.uncut ? (
       <section class="chapter-hero chapter-hero--uncut">
         <div class="hero-text">
-          <p class="hero-eyebrow label">{d.year} · {d.media}</p>
+          <p class="hero-eyebrow label">
+            {d.year}{d.media && <> · {d.media}</>}
+          </p>
           <h1 class="hero-title">{d.title}</h1>
           <p class="uncut-line">these pages are still uncut.</p>
         </div>
@@ -103,7 +106,9 @@ const pageTitle = d.eyebrow ? `${d.eyebrow} — ${d.title}` : d.title;
         <div class="hero-text">
           {d.eyebrow && <p class="hero-eyebrow label">{d.eyebrow}</p>}
           <h1 class="hero-title">{d.title}</h1>
-          <p class="hero-meta label">{d.year} · {d.media}</p>
+          <p class="hero-meta label">
+            {d.year}{d.media && <> · {d.media}</>}
+          </p>
         </div>
       </section>
     )
@@ -167,6 +172,22 @@ const pageTitle = d.eyebrow ? `${d.eyebrow} — ${d.title}` : d.title;
               align={block.leaf.align}
               label={block.leaf.label}
             />
+          ) : block.leaf.kind === 'video' ? (
+            <figure class="moving-plate">
+              <video
+                src={block.leaf.src}
+                aria-label={block.leaf.label}
+                autoplay={block.leaf.autoplay}
+                loop={block.leaf.loop}
+                muted={block.leaf.muted}
+                playsinline
+                controls
+                preload="metadata"
+              >
+                <a href={block.leaf.src}>open the video</a>
+              </video>
+              {block.leaf.caption && <figcaption>{block.leaf.caption}</figcaption>}
+            </figure>
           ) : (
             <p class="chapter-note">{block.leaf.text}</p>
           )

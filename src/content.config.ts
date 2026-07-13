@@ -38,6 +38,16 @@ const works = defineCollection({
       text: z.string(),
     });
 
+    const leafVideo = z.object({
+      kind: z.literal('video'),
+      src: z.string(),
+      label: z.string(),
+      caption: z.string().optional(),
+      autoplay: z.boolean().default(true),
+      loop: z.boolean().default(true),
+      muted: z.boolean().default(true),
+    });
+
     return z.object({
       title: z.string(),
       eyebrow: z.string().optional(),
@@ -56,7 +66,14 @@ const works = defineCollection({
       epigraphCite: z.string().optional(),
       exhibited: z.string().optional(),
       leaves: z
-        .array(z.discriminatedUnion('kind', [leafPlate, leafPoem, leafNote]))
+        .array(
+          z.discriminatedUnion('kind', [
+            leafPlate,
+            leafPoem,
+            leafNote,
+            leafVideo,
+          ])
+        )
         .default([]),
     });
   },

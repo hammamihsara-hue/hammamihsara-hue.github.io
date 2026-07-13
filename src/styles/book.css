@@ -488,17 +488,26 @@ a:focus-visible .toc-row .toc-label,
   padding: 0 1rem;
 }
 
+.cover-names {
+  --cover-name-size: clamp(1.65rem, 5vw, 4.8rem);
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: clamp(0.75rem, 2.2vw, 2rem);
+  white-space: nowrap;
+}
+
 .cover-arabic {
   font-family: var(--font-arabic);
-  font-size: clamp(1.3rem, 2.6vw, 2rem);
+  font-size: var(--cover-name-size);
+  line-height: 1.02;
   opacity: 0.9;
-  margin-bottom: 0.9rem;
 }
 
 .cover-name {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2.6rem, 8.5vw, 6.75rem);
+  font-size: var(--cover-name-size);
   line-height: 1.02;
   letter-spacing: 0.045em;
   text-transform: none;
@@ -941,6 +950,27 @@ a:focus-visible .toc-row .toc-label,
 }
 
 .plate figcaption {
+  margin-top: 0.8rem;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* ————— moving plates ————— */
+.moving-plate {
+  width: min(100%, 62rem);
+  margin-inline: auto;
+}
+
+.moving-plate video {
+  display: block;
+  width: 100%;
+  max-height: min(78vh, 48rem);
+  object-fit: contain;
+  background: var(--plate);
+}
+
+.moving-plate figcaption {
   margin-top: 0.8rem;
   font-size: 0.82rem;
   font-style: italic;

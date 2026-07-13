@@ -99,8 +99,6 @@ screens), `prose` (wraps within the measure), `overprint` (collapsing lines),
 
 ## known gaps awaiting Sara
 
-- *On Breathing Underwater* is an intentional stub ("these pages are still
-  uncut") — replace `uncut: true` with real content when it exists.
 - *TEMPORADA DE TORMENTAS* and *Where the Desert Meets the Sea*: texts not in
   the source folder; listed without readers.
 - Mixed-language poems (Spanish/Chinese inline) aren't `lang`-tagged word by

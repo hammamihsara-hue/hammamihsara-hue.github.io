@@ -25,7 +25,7 @@ interface Props {
 
 const {
   title,
-  description = 'sara h. hammami — librarian, artist, poet & translator. poems, artist books, photography.',
+  description = 'sara h. hammami — librarian, artist, poet & researcher. poems, artist books, photography.',
   folioStart,
   folioEnd,
   edgeLabel,
@@ -33,7 +33,11 @@ const {
 } = Astro.props;
 
 const fullTitle = title ? `${title} — sara h. hammami` : 'sara h. hammami';
-const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const path =
+  Astro.url.pathname
+    .replace(/\.html$/, '')
+    .replace(/\/index$/, '')
+    .replace(/\/$/, '') || '/';
 
 /** The dialog's contents include the cover itself. */
 const dialogToc = [
@@ -64,7 +68,7 @@ const dialogToc = [
     <a class="skip" href="#main">skip to contents</a>
 
     <header class="running-head">
-      <a class="rh-name" href="/">sara h. hammami</a>
+      {path !== '/' && <a class="rh-name" href="/">sara h. hammami</a>}
       <span class="rh-arabic" lang="ar" dir="rtl">سارة ه. حمامي</span>
       <button
         class="ribbon"
