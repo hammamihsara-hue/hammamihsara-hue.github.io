@@ -15,7 +15,7 @@ npm run check      # typecheck (astro check)
 ```
 
 Pushes to `main` deploy automatically to GitHub Pages at
-`https://hammamihsara-hue.github.io/` through the workflow in
+`https://www.sarahhamm.com/` through the workflow in
 `.github/workflows/deploy.yml`.
 
 ## where things live
