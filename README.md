@@ -14,8 +14,9 @@ npm run preview    # serve the built site
 npm run check      # typecheck (astro check)
 ```
 
-Deploy `dist/` to any static host (Netlify, Cloudflare Pages, GitHub Pages).
-Set the real domain in `astro.config.mjs` (`site:`) when known.
+Pushes to `main` deploy automatically to GitHub Pages at
+`https://hammamihsara-hue.github.io/` through the workflow in
+`.github/workflows/deploy.yml`.
 
 ## where things live
 
