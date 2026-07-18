@@ -72,7 +72,10 @@ import portrait from '../assets/portrait.jpg';
           dreaming of life underwater.
         </p>
         <figure class="tipped-in tipped-in--straight">
-          <Image src={portrait} alt="Sara, photographed from behind in black and white, dark curls against a soft riverside light." widths={[420, 820]} sizes="17rem" quality={80} />
+          <div class="plate-frame" data-light>
+            <Image src={portrait} alt="Sara, photographed from behind in black and white, dark curls against a soft riverside light." widths={[420, 820]} sizes="17rem" quality={80} />
+            <div class="plate-light" aria-hidden="true"></div>
+          </div>
         </figure>
       </div>
     </div>
