@@ -647,6 +647,10 @@ a:focus-visible .toc-row .toc-label,
   transform: rotate(-1.2deg);
 }
 
+.tipped-in--straight {
+  transform: none;
+}
+
 .tipped-in img {
   box-shadow: 0 0.5rem 1.6rem rgba(41, 36, 27, 0.18);
 }
