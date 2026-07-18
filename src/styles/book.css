@@ -1100,6 +1100,17 @@ a:focus-visible .toc-row .toc-label,
   object-fit: contain;
 }
 
+.book-page::after {
+  content: '';
+  position: absolute;
+  inset: -12%;
+  background: url('/grain.png');
+  background-size: 220px;
+  opacity: 0.07;
+  pointer-events: none;
+  animation: grain-drift 1.2s steps(4) infinite;
+}
+
 .book-page:focus-visible {
   z-index: 3;
   outline: 2px solid var(--thread);
