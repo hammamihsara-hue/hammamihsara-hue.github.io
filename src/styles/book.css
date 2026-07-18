@@ -1087,6 +1087,22 @@ a:focus-visible .toc-row .toc-label,
   box-shadow: 0 0.4rem 1.3rem rgba(0, 0, 0, 0.19);
 }
 
+.book-viewer[data-single-pages='true'] .book-spread {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.book-viewer[data-single-pages='true'] .book-page--left {
+  display: none;
+}
+
+.book-viewer[data-single-pages='true'] .book-page--right {
+  grid-column: 1;
+}
+
+.book-viewer[data-page-shape='landscape'] .book-page {
+  aspect-ratio: 1224 / 792;
+}
+
 .book-page--left {
   grid-column: 1;
   transform-origin: right center;

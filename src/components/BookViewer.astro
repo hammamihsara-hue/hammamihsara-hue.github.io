@@ -3,12 +3,23 @@ interface Props {
   title: string;
   pageDirectory: string;
   pageCount: number;
+  singlePages?: boolean;
+  landscape?: boolean;
   pdfSrc: string;
   pdfLabel: string;
   pdfMeta?: string;
 }
 
-const { title, pageDirectory, pageCount, pdfSrc, pdfLabel, pdfMeta } = Astro.props;
+const {
+  title,
+  pageDirectory,
+  pageCount,
+  singlePages = false,
+  landscape = false,
+  pdfSrc,
+  pdfLabel,
+  pdfMeta,
+} = Astro.props;
 const firstPage = `${pageDirectory}/page-01.jpg`;
 ---
 
@@ -18,6 +29,8 @@ const firstPage = `${pageDirectory}/page-01.jpg`;
   data-page-directory={pageDirectory}
   data-page-count={pageCount}
   data-book-title={title}
+  data-single-pages={singlePages ? 'true' : undefined}
+  data-page-shape={landscape ? 'landscape' : undefined}
   tabindex="0"
   aria-label={`${title} book reader`}
 >
@@ -77,6 +90,7 @@ const firstPage = `${pageDirectory}/page-01.jpg`;
     const directory = viewer.dataset.pageDirectory ?? '';
     const pageCount = Number(viewer.dataset.pageCount ?? 1);
     const title = viewer.dataset.bookTitle ?? 'book';
+    const alwaysSingle = viewer.dataset.singlePages === 'true';
     const mobile = window.matchMedia('(max-width: 640px)');
     const spread = viewer.querySelector<HTMLElement>('[data-book-spread]');
     const leftPage = viewer.querySelector<HTMLButtonElement>('[data-book-back]');
@@ -125,7 +139,7 @@ const firstPage = `${pageDirectory}/page-01.jpg`;
     };
 
     const render = () => {
-      const onePage = mobile.matches;
+      const onePage = alwaysSingle || mobile.matches;
       const spreadStart = page === 1 ? 1 : page % 2 === 0 ? page : page - 1;
       const leftNumber = onePage || spreadStart === 1 ? null : spreadStart;
       const rightNumber = onePage ? page : spreadStart === 1 ? 1 : spreadStart + 1;
@@ -162,7 +176,7 @@ const firstPage = `${pageDirectory}/page-01.jpg`;
     };
 
     const goNext = () => {
-      if (mobile.matches) {
+      if (alwaysSingle || mobile.matches) {
         if (page >= pageCount) return;
         page += 1;
       } else {
@@ -176,7 +190,7 @@ const firstPage = `${pageDirectory}/page-01.jpg`;
 
     const goPrevious = () => {
       if (page <= 1) return;
-      if (mobile.matches) page -= 1;
+      if (alwaysSingle || mobile.matches) page -= 1;
       else {
         const spreadStart = page % 2 === 0 ? page : page - 1;
         page = spreadStart <= 2 ? 1 : spreadStart - 2;

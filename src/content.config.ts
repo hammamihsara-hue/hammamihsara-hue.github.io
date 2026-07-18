@@ -59,6 +59,8 @@ const works = defineCollection({
         .object({
           directory: z.string(),
           count: z.number().int().positive(),
+          singlePages: z.boolean().default(false),
+          landscape: z.boolean().default(false),
         })
         .optional(),
     });

@@ -1,5 +1,5 @@
 ---
-title: An Early Summer Heaven
+title: early summer heaven
 year: '2023'
 media: text, paper, sandwiches, cookies, bao, mint, jelly & linen
 order: 3
@@ -14,49 +14,15 @@ leaves:
     src: ./plate-books.jpg
     alt: 'Four small recipe books fanned inside the linen box lid: Elderberry & Peanut Butter Sandwiches; Peach, Balsamic, Saffron & Cardamom Jam; Vanilla & Chocolate Swirl Butter Cookies; Karak Custard Milk Bao.'
     wide: true
-  - kind: note
-    text: four recipe poems build the interiority of the box. please open —
-  - kind: poem
-    file: elderberry-peanut-butter-sandwiches.txt
-    mode: recipe
-    titleParts:
-      - text: 'Elderberry &'
-        tone: '#4d3c56'
-      - text: ' Peanut Butter'
-        tone: '#96703d'
-      - text: ' Sandwiches'
-  - kind: poem
-    file: peach-balsamic-saffron-cardamom-jam.txt
-    mode: recipe
-    titleParts:
-      - text: 'Peach,'
-        tone: '#bd7d72'
-      - text: ' Balsamic,'
-      - text: ' Saffron &'
-        tone: '#bb5f1d'
-      - text: ' Cardamom'
-        tone: '#5a6e4e'
-      - text: ' Jam'
-  - kind: poem
-    file: vanilla-chocolate-swirl-butter-cookies.txt
-    mode: recipe
-    titleParts:
-      - text: 'Vanilla &'
-        tone: '#af9a55'
-      - text: ' Chocolate Swirl'
-        tone: '#4a3423'
-      - text: ' Butter Cookies'
-  - kind: poem
-    file: karak-custard-milk-bao.txt
-    mode: recipe
-    titleParts:
-      - text: 'Karak'
-        tone: '#c98e64'
-      - text: ' Custard'
-        tone: '#d3a27d'
-      - text: ' Milk'
-        tone: '#c0937f'
-      - text: ' Bao'
+  - kind: document
+    src: /media/early-summer-heaven/early-summer-heaven-recipes.pdf
+    label: open the complete recipe book
+    meta: PDF · 4 recipe sheets
+    bookPages:
+      directory: /media/early-summer-heaven/book-pages
+      count: 4
+      singlePages: true
+      landscape: true
   - kind: plate
     src: ./plate-box.jpg
     alt: Inside the box — a jar of jam, fresh mint, butter cookies, a steamed bun, and a parcel wrapped in baking paper, sealed with a madder ribbon and labeled in pencil.
