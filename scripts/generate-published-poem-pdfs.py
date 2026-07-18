@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import re
-import shutil
 from pathlib import Path
 
 from reportlab.lib.pagesizes import landscape, letter
@@ -16,18 +15,23 @@ from reportlab.pdfgen.canvas import Canvas
 ROOT = Path(__file__).resolve().parents[1]
 POEMS = ROOT / "src" / "poems"
 OUTPUT = ROOT / "public" / "documents" / "published-works"
-RESOURCES = ROOT.parent / "resources" / "CONTENT_ IMAGES, VIDEOS, ETC"
 
 SERIF = "PublishedWorksSerif"
-MONO = "PublishedWorksMono"
+CJK_SERIF = "PublishedWorksCJKSerif"
 
 
 def register_fonts() -> None:
     pdfmetrics.registerFont(
         TTFont(SERIF, "/System/Library/Fonts/Supplemental/Times New Roman.ttf")
     )
+    # Times New Roman does not include the two Chinese glyphs in "Imperial Silk".
+    # STSong is used only for those glyphs; every Latin character remains Times.
     pdfmetrics.registerFont(
-        TTFont(MONO, "/System/Library/Fonts/Supplemental/Courier New.ttf")
+        TTFont(
+            CJK_SERIF,
+            "/System/Library/Fonts/Supplemental/Songti.ttc",
+            subfontIndex=0,
+        )
     )
 
 
@@ -53,14 +57,14 @@ def draw_spatial(
     width, height = pagesize
     title = lines[0].strip()
     canvas = prepare_canvas(OUTPUT / output_name, pagesize, title)
-    canvas.setFont(MONO, font_size)
+    canvas.setFont(SERIF, font_size)
     canvas.setFillColorRGB(0.08, 0.075, 0.065)
 
     y = height - margin_top
     for line in lines:
         if y < margin_top:
             canvas.showPage()
-            canvas.setFont(MONO, font_size)
+            canvas.setFont(SERIF, font_size)
             canvas.setFillColorRGB(0.08, 0.075, 0.065)
             y = height - margin_top
         canvas.drawString(margin_x, y, line)
@@ -89,6 +93,30 @@ def wrap_preserving_spaces(text: str, font: str, size: float, max_width: float) 
     return lines
 
 
+def draw_times_line(canvas: Canvas, x: float, y: float, text: str, size: float) -> None:
+    """Draw one line in Times New Roman, with a serif fallback for CJK glyphs."""
+    cursor = x
+    run = ""
+    run_font = SERIF
+
+    def flush() -> None:
+        nonlocal cursor, run
+        if not run:
+            return
+        canvas.setFont(run_font, size)
+        canvas.drawString(cursor, y, run)
+        cursor += pdfmetrics.stringWidth(run, run_font, size)
+        run = ""
+
+    for character in text:
+        character_font = CJK_SERIF if "\u4e00" <= character <= "\u9fff" else SERIF
+        if character_font != run_font:
+            flush()
+            run_font = character_font
+        run += character
+    flush()
+
+
 def draw_prose(
     source_name: str,
     output_name: str,
@@ -113,8 +141,7 @@ def draw_prose(
                 canvas.showPage()
                 canvas.setFillColorRGB(0.08, 0.075, 0.065)
                 y = height - margin_top
-            canvas.setFont(SERIF, font_size)
-            canvas.drawString(margin_x, y, line)
+            draw_times_line(canvas, margin_x, y, line, font_size)
             y -= leading
         if source_line == "" and index > 0:
             y -= leading * 0.25
@@ -122,17 +149,9 @@ def draw_prose(
     canvas.save()
 
 
-def copy_original_pdfs() -> None:
-    grist = next(RESOURCES.glob("GRIST FINAL*.pdf"))
-    red_pocket = RESOURCES / "Red Pocket Press - Red Pocket Press.pdf"
-    shutil.copyfile(grist, OUTPUT / "te-deseo-que-suenes-bien.pdf")
-    shutil.copyfile(red_pocket, OUTPUT / "imperial-silk.pdf")
-
-
 def main() -> None:
     OUTPUT.mkdir(parents=True, exist_ok=True)
     register_fonts()
-    copy_original_pdfs()
 
     draw_spatial(
         "iram-of-the-pillars.txt",
@@ -144,6 +163,14 @@ def main() -> None:
         margin_top=54,
     )
     draw_prose("litany-of-i-miss-yous.txt", "litany-of-i-miss-yous.pdf")
+    draw_prose(
+        "te-deseo-que-suenes-bien.txt",
+        "te-deseo-que-suenes-bien.pdf",
+        font_size=10.5,
+        leading=13.5,
+        margin_x=60,
+        margin_top=56,
+    )
     draw_prose(
         "temporada-de-tormentas.txt",
         "temporada-de-tormentas.pdf",
@@ -169,6 +196,14 @@ def main() -> None:
         leading=12.5,
         margin_x=45,
         margin_top=52,
+    )
+    draw_prose(
+        "imperial-silk.txt",
+        "imperial-silk.pdf",
+        font_size=10.5,
+        leading=14,
+        margin_x=60,
+        margin_top=56,
     )
 
 

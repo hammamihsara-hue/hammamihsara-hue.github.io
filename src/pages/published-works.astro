@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import BookViewer from '../components/BookViewer.astro';
 import Codex from '../layouts/Codex.astro';
 import grist from '../assets/grist.jpg';
 
@@ -10,7 +11,7 @@ interface Item {
   lang?: string;
   note?: string;
   sourceUrl?: string;
-  widePdf?: boolean;
+  landscapePdf?: boolean;
 }
 
 interface Pub {
@@ -59,7 +60,7 @@ const pubs: Pub[] = [
         file: 'self-portrait-2022',
         mode: 'spatial',
         sourceUrl: 'https://www.dearpoetryjournal.com/sarahhammami',
-        widePdf: true,
+        landscapePdf: true,
       },
       {
         title: 'TEMPORADA DE TORMENTAS',
@@ -72,7 +73,7 @@ const pubs: Pub[] = [
         file: 'inshallah-inshallah-inshallah',
         mode: 'spatial',
         sourceUrl: 'https://www.dearpoetryjournal.com/sarahhammami',
-        widePdf: true,
+        landscapePdf: true,
       },
     ],
   },
@@ -144,30 +145,16 @@ const pubs: Pub[] = [
                     <span class="open-word">read pdf</span>
                   </span>
                 </summary>
-                <div class:list={['pdf-reading', { 'pdf-reading--wide': item.widePdf }]}>
-                  <object
-                    data={`/documents/published-works/${item.file}.pdf#view=FitH&toolbar=1&navpanes=0`}
-                    type="application/pdf"
-                    aria-label={`${item.title} — PDF poem`}
-                  >
-                    <p>
-                      this browser cannot display the PDF here.{' '}
-                      <a
-                        href={`/documents/published-works/${item.file}.pdf`}
-                        target="_blank"
-                      >
-                        open the poem as a PDF ↗
-                      </a>
-                    </p>
-                  </object>
-                </div>
-                <a
-                  class="pdf-open-link"
-                  href={`/documents/published-works/${item.file}.pdf`}
-                  target="_blank"
-                >
-                  open PDF in a new tab ↗
-                </a>
+                <BookViewer
+                  title={item.title}
+                  pageDirectory={`/media/published-works/${item.file}`}
+                  pageCount={1}
+                  singlePages
+                  landscape={item.landscapePdf}
+                  pdfSrc={`/documents/published-works/${item.file}.pdf`}
+                  pdfLabel="open the poem as a PDF ↗"
+                  pdfMeta="one page"
+                />
                 <p class="first-appeared">
                   first appeared in {pub.name}, {pub.year}.
                 </p>

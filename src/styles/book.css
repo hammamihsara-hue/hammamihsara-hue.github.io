@@ -1490,8 +1490,7 @@ details.reading summary .open-word {
   white-space: nowrap;
 }
 
-.source-link,
-.pdf-open-link {
+.source-link {
   font-family: var(--font-label);
   font-style: normal;
   font-size: 0.66rem;
@@ -1502,8 +1501,7 @@ details.reading summary .open-word {
   text-underline-offset: 0.22em;
 }
 
-.source-link:hover,
-.pdf-open-link:hover {
+.source-link:hover {
   color: var(--thread);
 }
 
@@ -1512,33 +1510,13 @@ details.reading summary:hover {
   color: var(--thread);
 }
 
-.pdf-reading {
-  margin: 1.4rem 0.2rem 0.8rem;
-  background: #f8f7f1;
-  border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
-  box-shadow: 0 0.9rem 2.5rem color-mix(in srgb, var(--ink) 8%, transparent);
-  overflow: hidden;
+.reading .book-viewer {
+  width: min(100%, 50rem);
+  margin: 1.4rem auto 0.8rem;
 }
 
-.pdf-reading object {
-  display: block;
-  width: 100%;
-  height: min(78vh, 52rem);
-  min-height: 38rem;
-}
-
-.pdf-reading--wide object {
-  height: min(72vh, 42rem);
-  min-height: 32rem;
-}
-
-.pdf-reading object > p {
-  padding: 2rem;
-}
-
-.pdf-open-link {
-  display: inline-block;
-  margin: 0 0.2rem 1.8rem;
+.reading .book-viewer[data-page-shape='landscape'] {
+  width: min(100%, 66rem);
 }
 
 .pub-item-flat {
@@ -1591,11 +1569,6 @@ details.reading summary:hover {
     gap: 0.35rem;
   }
 
-  .pdf-reading object,
-  .pdf-reading--wide object {
-    height: 70vh;
-    min-height: 30rem;
-  }
 }
 
 .duet {
