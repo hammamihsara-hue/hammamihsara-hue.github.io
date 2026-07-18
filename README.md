@@ -100,8 +100,7 @@ screens), `prose` (wraps within the measure), `overprint` (collapsing lines),
 
 ## known gaps awaiting Sara
 
-- *TEMPORADA DE TORMENTAS* and *Where the Desert Meets the Sea*: texts not in
-  the source folder; listed without readers.
+- *Where the Desert Meets the Sea*: text not in the source folder; listed
+  without a reader.
 - Mixed-language poems (Spanish/Chinese inline) aren't `lang`-tagged word by
   word since poems are plain text; known limitation.
-- Journal links could be added to the reading room when Sara confirms URLs.

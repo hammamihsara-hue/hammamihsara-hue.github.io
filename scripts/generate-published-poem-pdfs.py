@@ -32,7 +32,7 @@ def register_fonts() -> None:
 
 
 def prepare_canvas(path: Path, pagesize: tuple[float, float], title: str) -> Canvas:
-    canvas = Canvas(str(path), pagesize=pagesize, pageCompression=1)
+    canvas = Canvas(str(path), pagesize=pagesize, pageCompression=1, invariant=1)
     canvas.setTitle(title)
     canvas.setAuthor("Sara H. Hammami")
     canvas.setSubject("Published poem")
@@ -144,6 +144,14 @@ def main() -> None:
         margin_top=54,
     )
     draw_prose("litany-of-i-miss-yous.txt", "litany-of-i-miss-yous.pdf")
+    draw_prose(
+        "temporada-de-tormentas.txt",
+        "temporada-de-tormentas.pdf",
+        font_size=11,
+        leading=14.5,
+        margin_x=66,
+        margin_top=62,
+    )
     draw_spatial(
         "self-portrait-2022.txt",
         "self-portrait-2022.pdf",
