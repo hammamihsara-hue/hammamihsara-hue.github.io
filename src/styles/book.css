@@ -737,6 +737,10 @@ a:focus-visible .toc-row .toc-label,
   text-wrap: balance;
 }
 
+.hero-title em {
+  font-style: italic;
+}
+
 .hero-meta {
   margin-top: 1.6rem;
   color: color-mix(in srgb, var(--paper) 75%, transparent);

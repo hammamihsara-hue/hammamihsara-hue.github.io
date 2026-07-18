@@ -62,7 +62,11 @@ const idx = TOC.findIndex((t) => t.href === here);
 const prev = idx > 0 ? TOC[idx - 1] : undefined;
 const next = idx >= 0 && idx < TOC.length - 1 ? TOC[idx + 1] : undefined;
 
-const pageTitle = d.eyebrow ? `${d.eyebrow} — ${d.title}` : d.title;
+const pageTitle = d.eyebrow
+  ? d.inlineTitle
+    ? `${d.eyebrow}${d.title}`
+    : `${d.eyebrow} — ${d.title}`
+  : d.title;
 const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : ''}. a work by Sara H. Hammami.`;
 ---
 
@@ -112,8 +116,10 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
           {d.coverLight && <div class="plate-light" aria-hidden="true" />}
         </div>
         <div class="hero-text">
-          {d.eyebrow && <p class="hero-eyebrow label">{d.eyebrow}</p>}
-          <h1 class="hero-title">{d.title}</h1>
+          {d.eyebrow && !d.inlineTitle && <p class="hero-eyebrow label">{d.eyebrow}</p>}
+          <h1 class="hero-title">
+            {d.inlineTitle && d.eyebrow ? <>{d.eyebrow}<em>{d.title}</em></> : d.title}
+          </h1>
           <p class="hero-meta label">
             {d.year}{d.media && <> · {d.media}</>}
           </p>

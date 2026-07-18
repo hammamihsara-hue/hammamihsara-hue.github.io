@@ -1,6 +1,7 @@
 ---
-title: Enamorado con el Sol
-eyebrow: chasing the sun
+title: enamorado con el sol
+eyebrow: CHASING THE SUN/
+inlineTitle: true
 year: 2022 — ongoing
 media: photography, text
 order: 2

@@ -65,6 +65,7 @@ const works = defineCollection({
     return z.object({
       title: z.string(),
       eyebrow: z.string().optional(),
+      inlineTitle: z.boolean().default(false),
       year: z.string(),
       media: z.string(),
       order: z.number(),
