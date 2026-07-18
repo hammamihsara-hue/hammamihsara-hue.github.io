@@ -35,4 +35,4 @@ leaves:
       count: 35
 ---
 
-a new work is being written here — curious about the translucent qualities of the sea.
+this art book is an exploration of monster-making, the ecologies of the red sea using poetics and abstraction of image/video to bring one closer/further away from the subject & creatures we live with.
