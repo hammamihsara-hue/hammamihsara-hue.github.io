@@ -188,6 +188,18 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
               </video>
               {block.leaf.caption && <figcaption>{block.leaf.caption}</figcaption>}
             </figure>
+          ) : block.leaf.kind === 'document' ? (
+            <p class="document-leaf">
+              <a
+                class="thread-link thread-link--sewn"
+                href={block.leaf.src}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>{block.leaf.label}</span>
+                {block.leaf.meta && <span class="label">{block.leaf.meta}</span>}
+              </a>
+            </p>
           ) : (
             <p class="chapter-note">{block.leaf.text}</p>
           )

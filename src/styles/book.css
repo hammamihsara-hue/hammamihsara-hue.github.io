@@ -977,6 +977,23 @@ a:focus-visible .toc-row .toc-label,
   color: var(--ink-soft);
 }
 
+.document-leaf {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.document-leaf a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.85em;
+}
+
+.document-leaf .label {
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+}
+
 /* ————— poems: the manuscript setting ————— */
 .poem {
   min-width: 0;

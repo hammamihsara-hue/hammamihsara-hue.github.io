@@ -10,7 +10,7 @@ export interface TocEntry {
 
 export const TOC: TocEntry[] = [
   { href: '/works/on-breathing-underwater', label: 'on breathing underwater', folio: 2 },
-  { href: '/works/chasing-the-sun', label: 'chasing the sun — enamorado con el sol', folio: 3 },
+  { href: '/works/chasing-the-sun', label: 'CHASING THE SUN', note: 'enamorado con el sol —', folio: 3 },
   { href: '/works/an-early-summer-heaven', label: 'an early summer heaven', folio: 6 },
   { href: '/works/entangled-anemones', label: 'entangled anemones', folio: 9 },
   { href: '/published-works', label: 'published works', folio: 11 },

@@ -48,6 +48,13 @@ const works = defineCollection({
       muted: z.boolean().default(true),
     });
 
+    const leafDocument = z.object({
+      kind: z.literal('document'),
+      src: z.string(),
+      label: z.string(),
+      meta: z.string().optional(),
+    });
+
     return z.object({
       title: z.string(),
       eyebrow: z.string().optional(),
@@ -72,6 +79,7 @@ const works = defineCollection({
             leafPoem,
             leafNote,
             leafVideo,
+            leafDocument,
           ])
         )
         .default([]),
