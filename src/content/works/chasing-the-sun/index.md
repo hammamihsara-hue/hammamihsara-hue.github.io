@@ -42,8 +42,8 @@ leaves:
     duet: true
 ---
 
-*Chasing the Sun — Enamorado con el Sol* is a photo project that chases the sunlight, particularly during moments of routine walking. this exploration of light is a decadence and practice in movement. the project was started in response to sara developing a disability that would at times make walking a practice which was not always guaranteed.
+*Chasing the Sun — Enamorado con el Sol* is a photo project that chases the sunlight, particularly during moments of routine walking. this exploration of light is a decadence and practice in movement. the project was started in response to hammami developing a disability that would at times make walking a practice which was not always guaranteed.
 
 maneuvering disability in both walkable or non-walkable spaces is a practice that easily clarifies the limitations of which the city is adaptable to their public. in fast-paced cities, will peers slow down for someone who can’t maintain pace? are the sidewalks clear? if there is no train, is there a bus? this project seeks to chase light in moments of these questions that — more often than not — can lead to despair of realizing how limiting (lack of) movement can be.
 
-sara uses her camera to capture the sun or other aspects of light on these walks, which later feed into poems that are born of the walking practice, or the practice of searching for sun.
+hammami uses her camera to capture the sun or other aspects of light on these walks, which later feed into poems that are born of the walking practice, or the practice of searching for sun.
