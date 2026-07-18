@@ -87,7 +87,13 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
       </section>
     ) : (
       <section
-        class:list={['chapter-hero', { 'chapter-hero--bright': d.tone === 'bright' }]}
+        class:list={[
+          'chapter-hero',
+          {
+            'chapter-hero--bright': d.tone === 'bright',
+            'chapter-hero--cover-row': d.coverCrop === 'row',
+          },
+        ]}
         data-hero-dark={d.tone === 'dark' ? '' : undefined}
       >
         <div class="plate-frame" data-light={d.coverLight ? '' : undefined}>

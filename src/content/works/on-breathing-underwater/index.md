@@ -6,8 +6,9 @@ order: 1
 folioStart: 2
 folioEnd: 2
 cover: ./plate-cuttlefish-contact-sheet.jpg
-coverAlt: A printed contact sheet of a cuttlefish moving through deep red water, arranged in twelve rows of five sequential frames.
+coverAlt: A close-up of one row from a printed contact sheet, showing sequential frames of a cuttlefish moving through deep red water.
 coverLight: false
+coverCrop: row
 leaves:
   - kind: video
     src: /media/on-breathing-underwater/sara-cuttlefish-slow.m4v

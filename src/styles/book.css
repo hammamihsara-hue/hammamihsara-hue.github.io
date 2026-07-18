@@ -683,6 +683,18 @@ a:focus-visible .toc-row .toc-label,
   object-fit: cover;
 }
 
+.chapter-hero--cover-row .plate-frame img {
+  object-position: center 86%;
+  transform: scale(3.8);
+  transform-origin: center 86%;
+}
+
+@media (max-width: 640px) {
+  .chapter-hero--cover-row .plate-frame img {
+    transform: scale(7.5);
+  }
+}
+
 .chapter-hero::after {
   /* scrim for title legibility */
   content: '';
