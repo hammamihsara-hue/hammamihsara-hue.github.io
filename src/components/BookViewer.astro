@@ -1,0 +1,205 @@
+---
+interface Props {
+  title: string;
+  pageDirectory: string;
+  pageCount: number;
+  pdfSrc: string;
+  pdfLabel: string;
+  pdfMeta?: string;
+}
+
+const { title, pageDirectory, pageCount, pdfSrc, pdfLabel, pdfMeta } = Astro.props;
+const firstPage = `${pageDirectory}/page-01.jpg`;
+---
+
+<section
+  class="book-viewer"
+  data-book-viewer
+  data-page-directory={pageDirectory}
+  data-page-count={pageCount}
+  data-book-title={title}
+  tabindex="0"
+  aria-label={`${title} book reader`}
+>
+  <div class="book-spread" data-book-spread data-single>
+    <button
+      class="book-page book-page--left"
+      type="button"
+      data-book-back
+      aria-label="turn to the previous pages"
+      hidden
+    >
+      <img data-book-left-image src={firstPage} alt="" decoding="async" />
+    </button>
+
+    <button
+      class="book-page book-page--right"
+      type="button"
+      data-book-forward
+      aria-label="turn to the next pages"
+    >
+      <img
+        data-book-right-image
+        src={firstPage}
+        alt={`page 1 of ${title}`}
+        decoding="async"
+      />
+    </button>
+  </div>
+
+  <div class="book-controls" aria-label="book navigation">
+    <button type="button" data-book-previous disabled>← previous</button>
+    <p class="book-position" aria-live="polite" aria-atomic="true">
+      <span data-book-position>page 1 of {pageCount}</span>
+    </p>
+    <button type="button" data-book-next>next →</button>
+  </div>
+
+  <p class="book-pdf-link">
+    <a class="thread-link thread-link--sewn" href={pdfSrc} target="_blank" rel="noreferrer">
+      <span>{pdfLabel}</span>
+      {pdfMeta && <span class="label">{pdfMeta}</span>}
+    </a>
+  </p>
+
+  <noscript>
+    <p class="book-noscript"><a href={pdfSrc}>open the complete PDF</a></p>
+  </noscript>
+</section>
+
+<script>
+  const viewers = document.querySelectorAll<HTMLElement>('[data-book-viewer]');
+
+  for (const viewer of viewers) {
+    if (viewer.dataset.bookReady === 'true') continue;
+    viewer.dataset.bookReady = 'true';
+
+    const directory = viewer.dataset.pageDirectory ?? '';
+    const pageCount = Number(viewer.dataset.pageCount ?? 1);
+    const title = viewer.dataset.bookTitle ?? 'book';
+    const mobile = window.matchMedia('(max-width: 640px)');
+    const spread = viewer.querySelector<HTMLElement>('[data-book-spread]');
+    const leftPage = viewer.querySelector<HTMLButtonElement>('[data-book-back]');
+    const rightPage = viewer.querySelector<HTMLButtonElement>('[data-book-forward]');
+    const leftImage = viewer.querySelector<HTMLImageElement>('[data-book-left-image]');
+    const rightImage = viewer.querySelector<HTMLImageElement>('[data-book-right-image]');
+    const previous = viewer.querySelector<HTMLButtonElement>('[data-book-previous]');
+    const next = viewer.querySelector<HTMLButtonElement>('[data-book-next]');
+    const position = viewer.querySelector<HTMLElement>('[data-book-position]');
+
+    if (
+      !spread ||
+      !leftPage ||
+      !rightPage ||
+      !leftImage ||
+      !rightImage ||
+      !previous ||
+      !next ||
+      !position
+    ) continue;
+
+    let page = 1;
+    let turnTimer = 0;
+    const pageSource = (pageNumber: number) =>
+      `${directory}/page-${String(pageNumber).padStart(2, '0')}.jpg`;
+
+    const showPage = (
+      button: HTMLButtonElement,
+      image: HTMLImageElement,
+      pageNumber: number | null,
+      action: string
+    ) => {
+      button.hidden = pageNumber === null;
+      if (pageNumber === null) return;
+      image.src = pageSource(pageNumber);
+      image.alt = `page ${pageNumber} of ${title}`;
+      button.setAttribute('aria-label', `${action}; currently page ${pageNumber}`);
+    };
+
+    const preload = (pageNumbers: number[]) => {
+      for (const pageNumber of pageNumbers) {
+        if (pageNumber < 1 || pageNumber > pageCount) continue;
+        const image = new Image();
+        image.src = pageSource(pageNumber);
+      }
+    };
+
+    const render = () => {
+      const onePage = mobile.matches;
+      const spreadStart = page === 1 ? 1 : page % 2 === 0 ? page : page - 1;
+      const leftNumber = onePage || spreadStart === 1 ? null : spreadStart;
+      const rightNumber = onePage ? page : spreadStart === 1 ? 1 : spreadStart + 1;
+
+      showPage(leftPage, leftImage, leftNumber, 'turn to the previous pages');
+      showPage(rightPage, rightImage, rightNumber, 'turn to the next pages');
+      spread.toggleAttribute('data-single', onePage || spreadStart === 1);
+
+      const atStart = page === 1;
+      const atEnd = onePage ? page >= pageCount : (rightNumber ?? pageCount) >= pageCount;
+      previous.disabled = atStart;
+      next.disabled = atEnd;
+      leftPage.disabled = atStart;
+      rightPage.disabled = atEnd;
+
+      position.textContent = onePage
+        ? `page ${page} of ${pageCount}`
+        : leftNumber === null
+          ? `page 1 of ${pageCount}`
+          : `pages ${leftNumber}–${rightNumber} of ${pageCount}`;
+
+      const upcoming = onePage
+        ? [page + 1]
+        : spreadStart === 1
+          ? [2, 3]
+          : [spreadStart + 2, spreadStart + 3];
+      preload(upcoming);
+    };
+
+    const animate = (direction: 'next' | 'previous') => {
+      window.clearTimeout(turnTimer);
+      viewer.dataset.turn = direction;
+      turnTimer = window.setTimeout(() => delete viewer.dataset.turn, 320);
+    };
+
+    const goNext = () => {
+      if (mobile.matches) {
+        if (page >= pageCount) return;
+        page += 1;
+      } else {
+        const spreadStart = page === 1 ? 1 : page % 2 === 0 ? page : page - 1;
+        if (spreadStart !== 1 && spreadStart + 1 >= pageCount) return;
+        page = spreadStart === 1 ? 2 : Math.min(pageCount, spreadStart + 2);
+      }
+      animate('next');
+      render();
+    };
+
+    const goPrevious = () => {
+      if (page <= 1) return;
+      if (mobile.matches) page -= 1;
+      else {
+        const spreadStart = page % 2 === 0 ? page : page - 1;
+        page = spreadStart <= 2 ? 1 : spreadStart - 2;
+      }
+      animate('previous');
+      render();
+    };
+
+    previous.addEventListener('click', goPrevious);
+    next.addEventListener('click', goNext);
+    leftPage.addEventListener('click', goPrevious);
+    rightPage.addEventListener('click', goNext);
+    viewer.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        goNext();
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        goPrevious();
+      }
+    });
+    mobile.addEventListener('change', render);
+    render();
+  }
+</script>

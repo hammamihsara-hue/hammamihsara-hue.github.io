@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import Codex from '../../layouts/Codex.astro';
+import BookViewer from '../../components/BookViewer.astro';
 import Plate from '../../components/Plate.astro';
 import Poem from '../../components/Poem.astro';
 import { TOC } from '../../lib/toc';
@@ -202,17 +203,28 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
               {block.leaf.caption && <figcaption>{block.leaf.caption}</figcaption>}
             </figure>
           ) : block.leaf.kind === 'document' ? (
-            <p class="document-leaf">
-              <a
-                class="thread-link thread-link--sewn"
-                href={block.leaf.src}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span>{block.leaf.label}</span>
-                {block.leaf.meta && <span class="label">{block.leaf.meta}</span>}
-              </a>
-            </p>
+            block.leaf.bookPages ? (
+              <BookViewer
+                title={d.title.toLowerCase()}
+                pageDirectory={block.leaf.bookPages.directory}
+                pageCount={block.leaf.bookPages.count}
+                pdfSrc={block.leaf.src}
+                pdfLabel={block.leaf.label}
+                pdfMeta={block.leaf.meta}
+              />
+            ) : (
+              <p class="document-leaf">
+                <a
+                  class="thread-link thread-link--sewn"
+                  href={block.leaf.src}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span>{block.leaf.label}</span>
+                  {block.leaf.meta && <span class="label">{block.leaf.meta}</span>}
+                </a>
+              </p>
+            )
           ) : (
             <p class="chapter-note">{block.leaf.text}</p>
           )

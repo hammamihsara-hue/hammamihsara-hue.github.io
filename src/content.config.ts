@@ -54,6 +54,12 @@ const works = defineCollection({
       src: z.string(),
       label: z.string(),
       meta: z.string().optional(),
+      bookPages: z
+        .object({
+          directory: z.string(),
+          count: z.number().int().positive(),
+        })
+        .optional(),
     });
 
     return z.object({

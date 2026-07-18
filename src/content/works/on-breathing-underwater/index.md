@@ -30,6 +30,9 @@ leaves:
     src: /media/on-breathing-underwater/on-breathing-underwater-full-copy.pdf
     label: open the full copy
     meta: PDF · 35 pages
+    bookPages:
+      directory: /media/on-breathing-underwater/book-pages
+      count: 35
 ---
 
 a new work is being written here — curious about the translucent qualities of the sea.
