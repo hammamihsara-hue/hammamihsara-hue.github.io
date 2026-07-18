@@ -160,7 +160,13 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
           ) : block.kind === 'duet' ? (
             <div class="duet duet--plates">
               {block.plates.map((plate) => (
-                <Plate src={plate.src} alt={plate.alt} caption={plate.caption} light={plate.light} />
+                <Plate
+                  src={plate.src}
+                  alt={plate.alt}
+                  caption={plate.caption}
+                  light={plate.light}
+                  crop={plate.crop}
+                />
               ))}
             </div>
           ) : block.leaf.kind === 'plate' ? (
@@ -170,6 +176,7 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
               caption={block.leaf.caption}
               wide={block.leaf.wide}
               light={block.leaf.light}
+              crop={block.leaf.crop}
             />
           ) : block.leaf.kind === 'poem' ? (
             <Poem

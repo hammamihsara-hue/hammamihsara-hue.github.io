@@ -909,6 +909,17 @@ a:focus-visible .toc-row .toc-label,
   width: 100%;
 }
 
+.plate--cropped .plate-frame {
+  aspect-ratio: 4 / 5;
+}
+
+.plate--cropped .plate-frame img {
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1);
+  transform-origin: center 42%;
+}
+
 /* chasing the light: warm pool follows the cursor.
    Painted once, moved with transform only — never repainted per frame. */
 .plate-light {

@@ -20,6 +20,7 @@ const works = defineCollection({
       wide: z.boolean().default(false),
       light: z.boolean().default(false),
       duet: z.boolean().default(false),
+      crop: z.boolean().default(false),
     });
 
     const leafPoem = z.object({

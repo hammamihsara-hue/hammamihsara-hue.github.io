@@ -17,21 +17,15 @@ leaves:
     loop: true
     muted: true
   - kind: plate
-    src: ./scan-sequence-01.jpg
-    alt: A pale scan of repeated purple halftone frames showing a cuttlefish emerging through dark water.
-    duet: true
-  - kind: plate
-    src: ./scan-sequence-04.jpg
-    alt: A scanned contact sheet arranged in five columns, following a cuttlefish as it moves through deep purple water.
-    duet: true
-  - kind: plate
     src: ./scan-sequence-02.jpg
     alt: Rows of purple halftone frames tracing the cuttlefish as its body becomes more visible.
     duet: true
+    crop: true
   - kind: plate
     src: ./scan-sequence-03.jpg
     alt: A bright purple halftone sequence of a cuttlefish opening and changing shape underwater.
     duet: true
+    crop: true
   - kind: document
     src: /media/on-breathing-underwater/on-breathing-underwater-full-copy.pdf
     label: open the full copy

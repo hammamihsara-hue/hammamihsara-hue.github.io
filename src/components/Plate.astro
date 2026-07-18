@@ -12,12 +12,21 @@ interface Props {
   wide?: boolean;
   light?: boolean;
   eager?: boolean;
+  crop?: boolean;
 }
 
-const { src, alt, caption, wide = false, light = false, eager = false } = Astro.props;
+const {
+  src,
+  alt,
+  caption,
+  wide = false,
+  light = false,
+  eager = false,
+  crop = false,
+} = Astro.props;
 ---
 
-<figure class:list={['plate', { 'plate--wide': wide }]}>
+<figure class:list={['plate', { 'plate--wide': wide, 'plate--cropped': crop }]}>
   <div class="plate-frame" data-light={light ? '' : undefined}>
     <Image
       src={src}
