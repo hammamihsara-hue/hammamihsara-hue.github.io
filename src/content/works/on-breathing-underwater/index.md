@@ -9,6 +9,7 @@ cover: ./plate-moon.png
 coverAlt: A pale half moon suspended against a deep blue-black sky.
 coverLight: false
 coverCrop: moon
+statementAfterLeaves: true
 leaves:
   - kind: video
     src: /media/on-breathing-underwater/sara-cuttlefish-slow.m4v

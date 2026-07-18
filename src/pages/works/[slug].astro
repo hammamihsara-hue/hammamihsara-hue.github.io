@@ -133,9 +133,13 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
         )
       }
 
-      <div class="statement">
-        <Content />
-      </div>
+      {
+        !d.statementAfterLeaves && (
+          <div class="statement">
+            <Content />
+          </div>
+        )
+      }
 
       {d.exhibited && <p class="exhibited-note">{d.exhibited}</p>}
 
@@ -229,6 +233,14 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
           ) : (
             <p class="chapter-note">{block.leaf.text}</p>
           )
+        )
+      }
+
+      {
+        d.statementAfterLeaves && (
+          <div class="statement">
+            <Content />
+          </div>
         )
       }
 

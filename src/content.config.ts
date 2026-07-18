@@ -80,6 +80,7 @@ const works = defineCollection({
       epigraph: z.string().optional(),
       epigraphCite: z.string().optional(),
       exhibited: z.string().optional(),
+      statementAfterLeaves: z.boolean().default(false),
       leaves: z
         .array(
           z.discriminatedUnion('kind', [
