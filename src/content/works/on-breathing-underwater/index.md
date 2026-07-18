@@ -1,14 +1,14 @@
 ---
-title: On Breathing Underwater
+title: ON BREATHING UNDERWATER
 year: '2026'
 media: ''
 order: 1
 folioStart: 2
 folioEnd: 2
-cover: ./plate-cuttlefish-contact-sheet.jpg
-coverAlt: A close-up of one row from a printed contact sheet, showing sequential frames of a cuttlefish moving through deep red water.
+cover: ./plate-moon.png
+coverAlt: A pale half moon suspended against a deep blue-black sky.
 coverLight: false
-coverCrop: row
+coverCrop: moon
 leaves:
   - kind: video
     src: /media/on-breathing-underwater/sara-cuttlefish-slow.m4v

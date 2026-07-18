@@ -76,7 +76,7 @@ const works = defineCollection({
       cover: image().optional(),
       coverAlt: z.string().optional(),
       coverLight: z.boolean().default(true),
-      coverCrop: z.enum(['row']).optional(),
+      coverCrop: z.enum(['row', 'moon']).optional(),
       epigraph: z.string().optional(),
       epigraphCite: z.string().optional(),
       exhibited: z.string().optional(),

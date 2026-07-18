@@ -689,6 +689,12 @@ a:focus-visible .toc-row .toc-label,
   transform-origin: center 86%;
 }
 
+.chapter-hero--cover-moon .plate-frame img {
+  object-position: center 52%;
+  transform: scale(1.25);
+  transform-origin: center 46%;
+}
+
 @media (max-width: 640px) {
   .chapter-hero--cover-row .plate-frame img {
     transform: scale(7.5);
