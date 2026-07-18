@@ -10,16 +10,21 @@ interface Props {
   align?: 'left' | 'right';
   label?: string;
   lang?: string;
+  tone?: 'green';
 }
 
-const { text, mode = 'spatial', align = 'left', label, lang } = Astro.props;
+const { text, mode = 'spatial', align = 'left', label, lang, tone } = Astro.props;
 
 const lines = text.replace(/\s+$/, '').split('\n');
 const modeClass = mode === 'recipe' ? 'poem--prose' : `poem--${mode}`;
 ---
 
 <div
-  class:list={['poem', modeClass, { 'poem--right': align === 'right' }]}
+  class:list={[
+    'poem',
+    modeClass,
+    { 'poem--right': align === 'right', 'poem--green': tone === 'green' },
+  ]}
   lang={lang}
 >
   {label && <p class="poem-label label">{label}</p>}

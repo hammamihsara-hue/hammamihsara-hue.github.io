@@ -1272,6 +1272,14 @@ a:focus-visible .toc-row .toc-label,
   min-height: 1em;
 }
 
+.poem--green pre {
+  color: #234f36;
+  background: linear-gradient(180deg, #789363 0%, #3d6a47 48%, #173f2d 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /* prose poems wrap inside the measure */
 .poem--prose {
   max-width: min(var(--measure), 100%);

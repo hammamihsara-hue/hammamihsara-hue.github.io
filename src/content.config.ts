@@ -29,6 +29,7 @@ const works = defineCollection({
       label: z.string().optional(),
       mode: z.enum(['spatial', 'prose', 'overprint', 'recipe']).default('spatial'),
       align: z.enum(['left', 'right']).default('left'),
+      tone: z.enum(['green']).optional(),
       titleParts: z
         .array(z.object({ text: z.string(), tone: z.string().optional() }))
         .optional(),

@@ -24,8 +24,8 @@ leaves:
     light: true
   - kind: poem
     file: papi-lemon-seed.txt
-    label: a poem born of the walking practice
     mode: spatial
+    tone: green
   - kind: plate
     src: ./plate-forest.jpg
     alt: A distant pool of light falling between dark trunks onto the forest floor.

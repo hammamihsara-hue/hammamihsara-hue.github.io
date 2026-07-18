@@ -196,6 +196,7 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
               mode={block.leaf.mode === 'recipe' ? 'prose' : block.leaf.mode}
               align={block.leaf.align}
               label={block.leaf.label}
+              tone={block.leaf.tone}
             />
           ) : block.leaf.kind === 'video' ? (
             <figure class="moving-plate">
