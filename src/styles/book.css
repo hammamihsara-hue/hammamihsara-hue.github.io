@@ -1594,17 +1594,6 @@ details.reading summary:hover {
   }
 }
 
-.ongoing-book {
-  border-top: var(--hairline);
-  padding-top: 1.6rem;
-  display: grid;
-  gap: 2.4rem;
-}
-
-.ongoing-book .statement {
-  margin-inline: 0;
-}
-
 .duet {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

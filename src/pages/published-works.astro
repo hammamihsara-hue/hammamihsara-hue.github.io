@@ -1,18 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Codex from '../layouts/Codex.astro';
-import Poem from '../components/Poem.astro';
 import grist from '../assets/grist.jpg';
-import hkBuilding from '../assets/hk-building.jpg';
-import hkTower from '../assets/hk-tower.jpg';
-
-/* poems live in src/poems/*.txt — the txt IS the layout (see README) */
-const poemsRaw = import.meta.glob<string>('/src/poems/*.txt', {
-  query: '?raw',
-  import: 'default',
-  eager: true,
-});
-const poem = (name: string): string => poemsRaw[`/src/poems/${name}.txt`] ?? '';
 
 interface Item {
   title: string;
@@ -223,58 +212,6 @@ const pubs: Pub[] = [
       ))
     }
 
-    <section class="ongoing-book">
-      <div class="pub-head">
-        <h2 class="pub-name">How Ma-Ma Finds Me</h2>
-        <span class="pub-year">ongoing artist book</span>
-      </div>
-      <div class="statement">
-        <p>
-          in early 2024, several years after the passing of my grandmother
-          from my mother’s side, i had a dream which became the poem “HOW
-          MA-MA FINDS ME, 5 YEARS LATER / IN HONG KONG, / IMAGINED”. my
-          grandparents moved from the area of Guangzho to Hong Kong to
-          Santiago de los Caballeros. growing up, i spoke with ma-ma in
-          spanish and her with me in a combination of enping and spanish. it
-          was a daydream that we would often create together — on visiting
-          Hong Kong together, with her directing me through her memories of
-          the city.
-        </p>
-        <p>
-          during my trip to Hong Kong in 2025, i examined my routes
-          throughout the city with this poem that came to me over a year
-          prior, wondering if in fact, i had received these words &amp;
-          notices from her to hear her voice in my physical meandering.
-          these photographs document these parallels which seek to meet the
-          poem in this dream-scape memory / alternate reality.
-        </p>
-      </div>
-      <div class="duet">
-        <figure class="plate">
-          <div class="plate-frame">
-            <Image
-              src={hkBuilding}
-              alt="A pale Hong Kong apartment tower glimpsed through dense dark trees."
-              widths={[560, 1100]}
-              sizes="(max-width: 54rem) 100vw, 26rem"
-              quality={80}
-            />
-          </div>
-        </figure>
-        <figure class="plate">
-          <div class="plate-frame">
-            <Image
-              src={hkTower}
-              alt="A high-rise against a stormy grey sky, framed by a palm and a lemon tree."
-              widths={[560, 1100]}
-              sizes="(max-width: 54rem) 100vw, 26rem"
-              quality={80}
-            />
-          </div>
-        </figure>
-      </div>
-      <Poem text={poem('how-ma-ma-finds-me')} mode="spatial" />
-    </section>
     </div>
   </div>
 </Codex>
