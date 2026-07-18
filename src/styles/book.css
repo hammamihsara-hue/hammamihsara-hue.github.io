@@ -965,7 +965,7 @@ a:focus-visible .toc-row .toc-label,
   background-size: 220px;
   opacity: 0.07;
   pointer-events: none;
-  animation: grain-drift 1.2s steps(4) infinite;
+  animation: grain-drift 6s steps(4) infinite;
 }
 
 @keyframes grain-drift {
@@ -1132,7 +1132,7 @@ a:focus-visible .toc-row .toc-label,
   background-size: 220px;
   opacity: 0.07;
   pointer-events: none;
-  animation: grain-drift 1.2s steps(4) infinite;
+  animation: grain-drift 6s steps(4) infinite;
 }
 
 .book-page:focus-visible {

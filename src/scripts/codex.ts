@@ -160,7 +160,7 @@ function startLightLoop(): void {
       // pre-engagement (or touch): the sun wanders until it is caught
       if (!canHover() || !s.engaged) {
         drifting = true;
-        s.phase += dt * 0.00022;
+        s.phase += dt * 0.00006;
         s.tx = s.w * (0.5 + 0.2 * Math.sin(s.phase));
         s.ty = s.h * (0.44 + 0.16 * Math.sin(s.phase * 1.37 + 1.3));
       }
