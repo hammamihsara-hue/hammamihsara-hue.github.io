@@ -196,6 +196,7 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
               <video
                 src={block.leaf.src}
                 aria-label={block.leaf.label}
+                data-looping-video
                 autoplay={block.leaf.autoplay}
                 loop={block.leaf.loop}
                 muted={block.leaf.muted}
@@ -273,4 +274,28 @@ const workDescription = `${d.title} (${d.year})${d.media ? ` — ${d.media}` : '
       </nav>
     </div>
   </section>
+
+  <script>
+    const playLoopingVideos = () => {
+      document
+        .querySelectorAll<HTMLVideoElement>('[data-looping-video]')
+        .forEach((video) => {
+          video.muted = true;
+          video.defaultMuted = true;
+
+          const play = () => {
+            void video.play().catch(() => undefined);
+          };
+
+          play();
+          video.addEventListener('canplay', play, { once: true });
+        });
+    };
+
+    playLoopingVideos();
+    document.addEventListener('astro:page-load', playLoopingVideos);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) playLoopingVideos();
+    });
+  </script>
 </Codex>
