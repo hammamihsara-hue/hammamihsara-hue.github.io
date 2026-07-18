@@ -1608,78 +1608,12 @@ details.reading summary:hover {
 }
 
 /* ————— cv / back matter ————— */
-.cv-page {
+.cv-reader {
   padding: calc(var(--head-h) + 4.5rem) var(--page-pad) 6rem;
-  max-width: 62rem;
-  margin-inline: auto;
 }
 
-.cv-title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(2.6rem, 6vw, 4.6rem);
-  text-align: center;
-}
-
-.cv-contact {
-  text-align: center;
-  margin-top: 0.8rem;
-  color: var(--ink-soft);
-  font-style: italic;
-}
-
-.cv-download {
-  text-align: center;
-  margin-top: 1.6rem;
-  margin-bottom: 4rem;
-}
-
-.cv-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
-  gap: 3rem 3.5rem;
-}
-
-.cv-section > .label {
-  display: block;
-  border-bottom: var(--hairline);
-  padding-bottom: 0.6rem;
-  margin-bottom: 1.2rem;
-}
-
-.cv-entry {
-  font-size: 0.95rem;
-  line-height: 1.55;
-}
-
-.cv-entry + .cv-entry {
-  margin-top: 1.05rem;
-}
-
-.cv-entry .what {
-  font-weight: 500;
-}
-
-.cv-entry .who {
-  font-style: italic;
-}
-
-.cv-entry .when {
-  color: var(--ink-soft);
-  font-size: 0.88em;
-}
-
-/* colophon */
-.colophon {
-  margin-top: 5.5rem;
-  border-top: var(--hairline);
-  padding-top: 2.2rem;
-  text-align: center;
-  font-size: 0.88rem;
-  color: var(--ink-soft);
-  font-style: italic;
-  max-width: 34rem;
-  margin-inline: auto;
+.cv-reader .book-viewer {
+  width: min(100%, 52rem);
 }
 
 /* ————— edge label (vertical, from her drafts) ————— */
