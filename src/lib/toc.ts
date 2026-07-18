@@ -14,7 +14,7 @@ export const TOC: TocEntry[] = [
   { href: '/works/an-early-summer-heaven', label: 'early summer heaven', folio: 6 },
   { href: '/works/entangled-anemones', label: 'entangled anemones', folio: 9 },
   { href: '/published-works', label: 'published works', folio: 11 },
-  { href: '/cv', label: 'cv', folio: 14 },
+  { href: '/cv', label: 'CV', folio: 14 },
 ];
 
 /** Reading order for page-turning (arrow keys / swipe): cover, then contents. */
