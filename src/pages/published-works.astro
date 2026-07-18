@@ -20,6 +20,8 @@ interface Item {
   mode?: 'spatial' | 'prose';
   lang?: string;
   note?: string;
+  sourceUrl?: string;
+  widePdf?: boolean;
 }
 
 interface Pub {
@@ -33,30 +35,68 @@ const pubs: Pub[] = [
     name: 'ANMLY Press',
     year: '2024',
     items: [
-      { title: 'iram of the pillars', file: 'iram-of-the-pillars', mode: 'spatial' },
-      { title: 'LITANY OF I MISS YOU’S', file: 'litany-of-i-miss-yous', mode: 'prose' },
+      {
+        title: 'iram of the pillars',
+        file: 'iram-of-the-pillars',
+        mode: 'spatial',
+        sourceUrl: 'https://anmly.org/ap38/sara-hammami/',
+      },
+      {
+        title: 'LITANY OF I MISS YOU’S',
+        file: 'litany-of-i-miss-yous',
+        mode: 'prose',
+        sourceUrl: 'https://anmly.org/ap38/sara-hammami/',
+      },
     ],
   },
   {
     name: 'Grist — A Journal of the Literary Arts',
     year: '2023',
     items: [
-      { title: 'Te Deseo Que Sueñes Bien', file: 'te-deseo-que-suenes-bien', mode: 'prose' },
+      {
+        title: 'Te Deseo Que Sueñes Bien',
+        file: 'te-deseo-que-suenes-bien',
+        mode: 'prose',
+        sourceUrl: 'https://gristjournal.com/issue-15/',
+      },
     ],
   },
   {
     name: 'DEAR Poetry Journal',
     year: '2022',
     items: [
-      { title: 'self portrait, 2022', file: 'self-portrait-2022', mode: 'spatial' },
-      { title: 'TEMPORADA DE TORMENTAS', note: 'text joining these pages soon' },
-      { title: 'INSHALLAH, INSHALLAH, INSHALLAH,', file: 'inshallah-inshallah-inshallah', mode: 'spatial' },
+      {
+        title: 'self portrait, 2022',
+        file: 'self-portrait-2022',
+        mode: 'spatial',
+        sourceUrl: 'https://www.dearpoetryjournal.com/sarahhammami',
+        widePdf: true,
+      },
+      {
+        title: 'TEMPORADA DE TORMENTAS',
+        note: 'publication',
+        sourceUrl: 'https://www.dearpoetryjournal.com/sarahhammami',
+      },
+      {
+        title: 'INSHALLAH, INSHALLAH, INSHALLAH,',
+        file: 'inshallah-inshallah-inshallah',
+        mode: 'spatial',
+        sourceUrl: 'https://www.dearpoetryjournal.com/sarahhammami',
+        widePdf: true,
+      },
     ],
   },
   {
     name: 'Red Pocket Press — Year of the Tiger Zine',
     year: '2022',
-    items: [{ title: 'Imperial Silk', file: 'imperial-silk', mode: 'prose' }],
+    items: [
+      {
+        title: 'Imperial Silk',
+        file: 'imperial-silk',
+        mode: 'prose',
+        sourceUrl: 'https://redpocketpress.bigcartel.com/',
+      },
+    ],
   },
   {
     name: 'Kutubna Cultural Center',
@@ -100,17 +140,69 @@ const pubs: Pub[] = [
               <details class="reading">
                 <summary>
                   <span>{item.title}</span>
-                  <span class="open-word">read</span>
+                  <span class="reading-actions">
+                    {item.sourceUrl && (
+                      <a
+                        class="source-link"
+                        href={item.sourceUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        publication ↗
+                      </a>
+                    )}
+                    <span class="open-word">read pdf</span>
+                  </span>
                 </summary>
-                <Poem text={poem(item.file)} mode={item.mode ?? 'spatial'} lang={item.lang} />
+                <div class:list={['pdf-reading', { 'pdf-reading--wide': item.widePdf }]}>
+                  <object
+                    data={`/documents/published-works/${item.file}.pdf#view=FitH&toolbar=1&navpanes=0`}
+                    type="application/pdf"
+                    aria-label={`${item.title} — PDF poem`}
+                  >
+                    <p>
+                      this browser cannot display the PDF here.{' '}
+                      <a
+                        href={`/documents/published-works/${item.file}.pdf`}
+                        target="_blank"
+                      >
+                        open the poem as a PDF ↗
+                      </a>
+                    </p>
+                  </object>
+                </div>
+                <a
+                  class="pdf-open-link"
+                  href={`/documents/published-works/${item.file}.pdf`}
+                  target="_blank"
+                >
+                  open PDF in a new tab ↗
+                </a>
                 <p class="first-appeared">
                   first appeared in {pub.name}, {pub.year}.
                 </p>
               </details>
             ) : (
               <p class="pub-item-flat">
-                <span>{item.title}</span>
-                <span class="open-word">{item.note}</span>
+                {item.sourceUrl ? (
+                  <a href={item.sourceUrl} target="_blank" rel="noreferrer">
+                    {item.title}
+                  </a>
+                ) : (
+                  <span>{item.title}</span>
+                )}
+                {item.sourceUrl ? (
+                  <a
+                    class="open-word"
+                    href={item.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {item.note} ↗
+                  </a>
+                ) : (
+                  <span class="open-word">{item.note}</span>
+                )}
               </p>
             )
           )}
@@ -185,3 +277,9 @@ const pubs: Pub[] = [
     </div>
   </div>
 </Codex>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('details.reading summary a').forEach((link) => {
+    link.addEventListener('click', (event) => event.stopPropagation());
+  });
+</script>
